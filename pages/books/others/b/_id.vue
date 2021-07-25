@@ -1,0 +1,45 @@
+<template>
+  <div>
+    <div v-if="otherBookList">
+      <BookCardDetail :book="otherBookList" />
+      <CommentEdit />
+    </div>
+    <div v-else>
+      <BookEmpty />
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  async asyncData ({ store, params }) {
+    try {
+      let otherBookList
+      await store.dispatch('books/otherFetchBook', { id: params.id })
+        .then((res) => {
+          otherBookList = res.data.book
+        })
+      return { otherBookList }
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  head () {
+    return {
+      meta: [
+        { hid: 'og:type', property: 'og:type', content: 'website' },
+        { hid: 'og:title', property: 'og:title', content: this.otherBookList.title },
+        { hid: 'og:site_name', property: 'og:site_name', content: 'library App' },
+        { hid: 'og:description', property: 'og:description', content: this.otherBookList.contents },
+        { hid: 'og:image', property: 'og:image', content: this.otherBookList.thumbnail },
+        { hid: 'og:url', property: 'og:url', content: `http://localhost:3000/}${this.$route.fullPath}` }
+      ]
+    }
+  }
+
+}
+</script>
+
+<style>
+
+</style>
