@@ -60,8 +60,8 @@ module.exports = {
   ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // baseURL: process.env._VUE_APP_API_URL,
-    baseURL: 'http://api.roen.pe.kr/',
+    browserBaseURL: process.env.NODE_ENV === 'production' ? 'http://api.roen.pe.kr/' : 'http://localhost:5000/',
+    baseURL: process.env.NODE_ENV === 'production' ? 'http://api.roen.pe.kr/' : 'http://localhost:5000/',
     // baseURL: 'http://localhost:5000/',
     credentials: true
   },
