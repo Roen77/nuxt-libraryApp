@@ -14,10 +14,14 @@ async function start () {
   // Build only in dev mode with hot-reloading
   if (isDev) {
     build(nuxt)
+  } else {
+    listen()
   }
   // Listen the server
-  app.listen(port, '0.0.0.0')
-  console.log('Server listening on `localhost:' + port + '`.')
+  function listen () {
+    app.listen(port, '0.0.0.0')
+    console.log('Server listening on `localhost:' + port + '`.')
+  }
 }
 
 start()
