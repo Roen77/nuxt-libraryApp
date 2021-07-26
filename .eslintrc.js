@@ -6,7 +6,8 @@ module.exports = {
     'cypress/globals': true
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
+    sourceType: 'module'
   },
   extends: [
     '@nuxtjs',
