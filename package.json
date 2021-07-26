@@ -8,7 +8,7 @@
     "dev": "nuxt",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
-    "start": "cross-env PORT=80 NODE_ENV=production nuxt start",
+    "start": "cross-env PORT=80 NODE_ENV=production node server",
     "e2e": "cypress open",
     "e2e:silent": "cypress run"
   },
