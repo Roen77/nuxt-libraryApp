@@ -3,11 +3,11 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    'cypress/globals': true
+    'cypress/globals': true,
+    sourceType: 'module'
   },
   parserOptions: {
-    parser: 'babel-eslint',
-    sourceType: 'module'
+    parser: 'babel-eslint'
   },
   extends: [
     '@nuxtjs',
