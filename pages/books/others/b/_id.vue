@@ -32,7 +32,7 @@ export default {
         { hid: 'og:site_name', property: 'og:site_name', content: 'library App' },
         { hid: 'og:description', property: 'og:description', content: this.otherBookList.contents },
         { hid: 'og:image', property: 'og:image', content: this.otherBookList.thumbnail },
-        { hid: 'og:url', property: 'og:url', content: `http://localhost:3000/}${this.$route.fullPath}` }
+        { hid: 'og:url', property: 'og:url', content: `http://api.roen.pe.kr/}${this.$route.fullPath}` }
       ]
     }
   }

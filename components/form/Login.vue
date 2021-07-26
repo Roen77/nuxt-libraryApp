@@ -89,10 +89,10 @@ export default {
       }
     },
     google () {
-      window.location = 'http://localhost:5000/user/google'
+      window.location = 'http://api.roen.pe.kr/user/google'
     },
     kakao () {
-      window.location = 'http://localhost:5000/user/kakao'
+      window.location = 'http://api.roen.pe.kr/user/kakao'
     },
     socialLogin () {
       this.active = false

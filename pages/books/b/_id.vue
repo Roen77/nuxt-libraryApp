@@ -55,7 +55,7 @@ export default {
         { hid: 'og:site_name', property: 'og:site_name', content: 'library App' },
         { hid: 'og:description', property: 'og:description', content: this.getBook.contents },
         { hid: 'og:image', property: 'og:image', content: this.getBook.thumbnail },
-        { hid: 'og:url', property: 'og:url', content: `http://localhost:3000/}${this.$route.fullPath}` }
+        { hid: 'og:url', property: 'og:url', content: `http://vue.roen.pe.kr}${this.$route.fullPath}` }
       ]
     }
   },
