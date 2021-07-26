@@ -61,7 +61,8 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // baseURL: process.env._VUE_APP_API_URL,
-    baseURL: 'http://localhost:5000/',
+    baseURL: 'http://api.roen.pe.kr/',
+    // baseURL: 'http://localhost:5000/',
     credentials: true
   },
 
@@ -71,13 +72,21 @@ export default {
       lang: 'en'
     }
   },
+  build: {
+    babel: {
+      plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]]
+    }
+    // server: {
+    //   port: 3000
+    // }
+  }
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  },
-  server: {
-    port: 3000
+  // build: {
+  // }
+  // server: {
+  //   port: 3000
 
-  }
+  // }
 
 }
