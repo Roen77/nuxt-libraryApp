@@ -71,7 +71,7 @@ export default {
         this.errmsg = true
         return
       }
-      let bookinfo = { size: this.size, query: this.search, page: this.currentpage, reset: this.reset }
+      let bookinfo = { size: this.size, query: encodeURIComponent(this.search), page: this.currentpage, reset: this.reset }
       switch (this.option) {
         case '통합':
           bookinfo = { ...bookinfo }
