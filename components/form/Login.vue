@@ -30,7 +30,7 @@
           {{ errmsg }}
         </div>
         <div>
-          <button class="primary-btn" type="submit" :disabled="!totalConfirm">
+          <button class="primary-btn" type="submit" :disabled="!disabledBtn">
             로그인
           </button>
         </div>
@@ -63,17 +63,17 @@ export default {
   },
   computed: {
     isvalidLength () {
-      return validLength(this.password, { len1: 30, len2: 8 })
+      return validLength(this.password, { len1: 8, len2: 30 })
     },
     isvalidEmail () {
       return validEmail(this.email)
     },
-    totalConfirm () {
+    disabledBtn () {
       return this.isvalidLength && this.isvalidEmail
     }
   },
   methods: {
-    ...mapActions('user', ['login', 'googleLogin', 'kakaoLogin']),
+    ...mapActions('user', ['login']),
     async UserLogin () {
       try {
         const userinfo = {
@@ -85,14 +85,15 @@ export default {
         this.$router.push('/')
       } catch (error) {
         // 에러 발생시 에러메세지 출력될 수 있도록 구현
+        console.log(error)
         this.errmsg = error.response.data.msg
       }
     },
     google () {
-      window.location = 'http://api.roen.pe.kr/user/google'
+      window.location = 'https://api.roen.pe.kr/user/google'
     },
     kakao () {
-      window.location = 'http://api.roen.pe.kr/user/kakao'
+      window.location = 'https://api.roen.pe.kr/user/kakao'
     },
     socialLogin () {
       this.active = false
@@ -109,7 +110,6 @@ export default {
       })
     }
   }
-
 }
 </script>
 

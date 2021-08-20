@@ -28,7 +28,7 @@
     </div>
     <div>
       <label for="">책 url</label>
-      <p><input v-model="url" type="text"><i v-if="url" class="fas fa-plus-circle" @click="resetInput($event,'url')"></i></p>
+      <p><input v-model="newBook.url" type="text"><i v-if="newBook.url" class="fas fa-plus-circle" @click="resetInput($event,'url')"></i></p>
     </div>
     <div>
       <label for="">isbn</label>
@@ -57,8 +57,9 @@
     </div>
     <div class="date_area">
       <label for="">출간날짜</label>
-      <date-picker v-model="datetime" value-type="format"></date-picker>
+      <b-form-datepicker id="datepicker" v-model="newBook.datetime"></b-form-datepicker>
     </div>
+    <!-- 책 이미지 추가 -->
     <div class="file_container add">
       <div class="txt">
         <label for="fileinput"><span class="round-btn yellow"><i class="far fa-file-image"></i>책 이미지 추가</span></label>
@@ -66,7 +67,7 @@
       </div>
       <div v-if="getImagePath.length !== 0" class="photos">
         <div class="images">
-          <img :src="getImagePath" alt="">
+          <img :src="getImagePath" alt="썸네일 이미지">
         </div>
         <div>
           <button class="deletebtn" type="button" @click="onRemoveImage">
@@ -78,51 +79,40 @@
     <button type="submit" class="round-btn red addbtn" :disabled="disabledBtn">
       추가하기
     </button>
-    <CommonLenConfirm v-if="!InputLenValid" len="30" />
+    <CommonLenConfirm v-if="!InputLenValid" len="50" />
   </form>
 </template>
 
 <script>
 import { mapActions, mapMutations } from 'vuex'
-import DatePicker from 'vue2-datepicker'
 import BookFetchMixin from '~/mixins/BookFetchMixin'
 export default {
-  components: { DatePicker },
   mixins: [BookFetchMixin],
   data () {
     return {
       newBook: {
         title: '',
-        contents: '',
         isbn: '',
         authors: '',
         publisher: '',
-        selectedFile: ''
+        contents: '',
+        url: '',
+        datetime: ''
       },
-      url: '',
-      datetime: new Date()
-    }
-  },
-  computed: {
-    InputLenValid () {
-      return this.$inputLen(this.newBook, 30)
-    },
-    disabledBtn () {
-      return !this.newBook.title || !this.newBook.authors || !this.newBook.contents || !this.InputLenValid
+      selectedFile: ''
     }
   },
   methods: {
     ...mapActions('books', ['createBook', 'uploadImg']),
     ...mapMutations('books', ['removeThumbnail', 'alertEditComplete']),
-    async onaddBook () {
-      await this.fetchData()
+     onaddBook () {
+       this.fetchData()
     },
     onRemoveImage () {
-      this.newBook.selectedFile = null
+      this.selectedFile = null
       this.removeThumbnail()
     }
   }
-
 }
 </script>
 
@@ -131,7 +121,7 @@ export default {
 .main_container .form_content .date_area{display: flex; align-items: center;}
 .main_container .form_content .date_area label{margin-right: auto;}
 @media (max-width:1200px) {
-  .form_content.addform{padding: 0 60px;}
+  .form_content.addform{padding: 0 30px;}
 }
 @media (max-width:600px) {
   .form_content.addform{padding: 0;}

@@ -1,11 +1,8 @@
 <template>
   <div>
-    <div v-if="otherBookList">
+    <div>
       <BookCardDetail :book="otherBookList" />
       <CommentEdit />
-    </div>
-    <div v-else>
-      <BookEmpty />
     </div>
   </div>
 </template>
@@ -20,26 +17,44 @@ export default {
           otherBookList = res.data.book
         })
       return { otherBookList }
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      console.log(err)
     }
   },
   head () {
     return {
       meta: [
         { hid: 'og:type', property: 'og:type', content: 'website' },
-        { hid: 'og:title', property: 'og:title', content: this.otherBookList.title },
-        { hid: 'og:site_name', property: 'og:site_name', content: 'library App' },
-        { hid: 'og:description', property: 'og:description', content: this.otherBookList.contents },
-        { hid: 'og:image', property: 'og:image', content: this.otherBookList.thumbnail },
-        { hid: 'og:url', property: 'og:url', content: `http://api.roen.pe.kr/}${this.$route.fullPath}` }
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: this.otherBookList.title
+        },
+        {
+          hid: 'og:site_name',
+          property: 'og:site_name',
+          content: 'library App'
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: this.otherBookList.contents
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: this.otherBookList.thumbnail
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: `http://api.roen.pe.kr/${this.$route.fullPath}`
+        }
       ]
     }
   }
-
 }
 </script>
 
 <style>
-
 </style>

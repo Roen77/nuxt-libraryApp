@@ -10,7 +10,7 @@
         </div>
       </div>
       <!-- books -->
-      <BookPagination :total-page="totalPage" @pageFirst="pagination" @pagination="pagination" @pageLast="pagination" />
+      <BookPagination :total-page="totalPage" @pagination="pagination" />
     </div>
     <div v-else>
       <BookEmpty />

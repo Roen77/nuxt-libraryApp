@@ -35,7 +35,15 @@ export default {
 .modal-mask.alert_main{
   background-color:rgba(0,0,0,0.6);
 }
-.modal-mask.alert_main .modal-container{width: 30%; height: 100px; border-radius: 5px;}
+.modal-mask.alert_main .modal-container{width: 700px; height: auto; border-radius: 5px;}
 .modal-mask.alert_main .body{text-align: center;}
 .modal-mask.alert_main .body button{border-radius: 9px;}
+@media (max-width:900px) {
+.modal-mask.alert_main .modal-container{width: 60%;}
+.modal-mask.alert_main .modal-body{margin: 0; padding: 10px 0;}
+}
+@media (max-width:600px) {
+.modal-mask.alert_main .modal-container{width: 85%;}
+.modal-mask.alert_main .primary-btn{display: block; width: 100%;}
+}
 </style>

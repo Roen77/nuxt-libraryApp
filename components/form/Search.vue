@@ -37,14 +37,12 @@ export default {
   },
   methods: {
     changeSelect (option) {
-      console.log(option)
       this.selectedOption = option
       this.selected = false
       this.$refs.searchInput.focus()
       this.$emit('selectedOption', option)
     }
   }
-
 }
 </script>
 
@@ -58,7 +56,7 @@ export default {
 .search_form{position: relative; display: flex; width: 70%; margin: 0 auto; border: 2px solid #677eff;}
 .search_form .main_select{position: absolute; left:0; top:0; height: 45px; line-height: 45px; text-align: center; background-color: #fff; border-right: 1px solid #677eff; width: 100px; cursor: pointer; z-index: 30;}
 .search_form .main_select .fas{margin-left: 5px; font-size: 13px; }
-.search_form .custom_select{color:#222;  border: 1px solid #ddd; border-radius: 10px; z-index: 100; background-color: rgba(255, 255, 255, 0.781);}
+.search_form .custom_select{color:#222;  border: 1px solid #ddd; border-radius: 10px; z-index: 100; background-color: rgb(255, 255, 255);}
 .search_form .custom_select li{line-height: 40px; cursor: pointer; transition: all 0.5s;}
 .search_form input{ width: 100%; padding:15px 15px 15px 120px; box-sizing: border-box;}
 .search_form  button{width: 100px; background-color: #677eff; transition: all 0.5s;}
@@ -78,5 +76,8 @@ export default {
 .more-btn{width: 100%;}
 @media (max-width:900px) {
 .search_form{width: 100%;}
+.search_form .main_select{width: 65px; font-size: 14px;}
+.search_form input{padding: 15px 15px 15px 80px;}
+.search_form button{width: 60px;}
 }
 </style>

@@ -7,14 +7,14 @@
     <div v-if="hasBook">
       <div class="books">
         <div v-for="book in getBooks" :key="book.id" class="book">
-          <book-card :book="book"></book-card>
+          <BookCard :book="book" />
         </div>
       </div>
       <!-- books -->
-      <book-pagination :total-page="totalPage" @pageFirst="pagination" @pagination="pagination" @pageLast="pagination"></book-pagination>
+      <BookPagination :total-page="totalPage" @pagination="pagination" />
     </div>
     <div v-else>
-      <book-empty></book-empty>
+      <BookEmpty />
     </div>
   </div>
 </template>
@@ -33,8 +33,10 @@ export default {
   watch: {
     '$route.query': {
       handler (query) {
-        this.searchOption(query.search)
-        this.searchData(query.target)
+        this.updateSearch({
+          data: query.target,
+          selectedOption: query.search
+        })
       },
       deep: true,
       immediate: true
@@ -42,10 +44,9 @@ export default {
   },
   watchQuery: ['search', 'target'],
   methods: {
-    ...mapMutations('books', ['searchOption', 'searchData'])
+    ...mapMutations('books', ['updateSearch'])
 
   }
-
 }
 </script>
 

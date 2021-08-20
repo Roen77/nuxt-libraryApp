@@ -5,7 +5,7 @@
     </button>
     <div v-if="showComment" class="comment">
       <div class="comment_head">
-        <h2>댓글 쓰기</h2>
+        <h3>댓글 쓰기</h3>
         <div v-if="loading" class="loading-spin">
           <i class="fas fa-spinner fa-spin"></i>
         </div>
@@ -45,6 +45,9 @@ export default {
     ...mapGetters('comments', ['getComments', 'getCommentPage']),
     onStateComment () {
       return !this.showComment ? '댓글 보기' : '댓글 접기'
+    },
+    isaddComment () {
+      return this.showComment && this.getComments && this.getComments.length > 9 && !this.getCommentPage.end
     }
   },
   mounted () {
@@ -59,8 +62,8 @@ export default {
       this.ontoggleComment()
       if (this.showComment) {
         this.loading = true
+        //  처음 데이터를 호출하므로 page는 1로 초기화
         this.page = 1
-        console.log('함수호출전')
         this.fetchComments({ bookId: this.$route.params.id, init: true })
           .then(() => {
             this.loading = false
@@ -70,12 +73,11 @@ export default {
     onaddComments () {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (this.showComment && entry.isIntersecting && this.getComments && this.getComments.length > 9 && !this.getCommentPage.end) {
-            console.log(this.getCommentPage.end, '끝좀..')
+          if ( this.isaddComment && entry.isIntersecting ) {
             this.loading = true
             this.page++
             this.fetchComments({ bookId: this.$route.params.id, page: this.page })
-              .then((res) => {
+              .then(_ => {
                 this.loading = false
               })
           }
@@ -118,6 +120,6 @@ export default {
 }
 .comment_head{display: flex; align-items: center;}
 .comment_head>div{margin-left: auto; font-weight: bold;}
-.comment_area{position: relative; margin: 17px 0; padding-bottom: 50px;}
+.comment_area{position: relative; padding: 10px 0 100px;}
 .trigger{position: absolute; text-align: center;  left:0; bottom:0; width: 100%; height: 20px;}
 </style>

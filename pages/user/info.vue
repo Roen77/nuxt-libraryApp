@@ -3,10 +3,12 @@
     <div class="profile_box">
       <h2>프로필 정보 수정</h2>
       <form class="form_content" @submit.prevent="onChangeProfile">
+        <!-- 이메일 -->
         <div>
           <label for="email">이메일</label>
           <p><input id="email" class="readonly" readonly :value="getUser.email" type="text"></p>
         </div>
+        <!-- 닉네임 -->
         <div>
           <label for="username">닉네임</label>
           <p><input id="username" v-model="username" type="text"></p>
@@ -14,11 +16,13 @@
         <div v-if="isusernamevalid" class="err">
           닉네임은 20자 이하로 입력해주세요.
         </div>
+        <!-- 포르필 이미지 수정 -->
         <div class="file_container add">
           <div class="txt">
             <label for="fileinput"><span class="round-btn yellow"><i class="far fa-file-image"></i>프로필 이미지 수정</span></label>
             <input id="fileinput" ref="file" style="display:none" type="file" @change="onChangeImage">
           </div>
+          <!-- 이미지 사진 보여주기 -->
           <div v-if="getImagePath" class="photos">
             <div class="images">
               <img v-if="getImagePath.length === 0 &&getUser.thumbnail" :src="getUser.thumbnail" alt="userprofile">
@@ -37,7 +41,7 @@
       <form class="form_content" @submit.prevent="onChangePassword">
         <div>
           <label for="email">이메일</label>
-          <p><input id="email" class="readonly" readonly :value="getUser.email" type="text"></p>
+          <p><input id="email2" class="readonly" readonly :value="getUser.email" type="text"></p>
         </div>
         <div>
           <label for="password">비밀번호</label>
@@ -71,13 +75,13 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import { validLength } from '../../utils/validate'
 export default {
   data () {
     return {
-      username: '',
       email: '',
+      username: '',
       isChangePassword: false,
       password: '',
       confirm_password: '',
@@ -92,29 +96,41 @@ export default {
       return this.password === this.confirm_password
     },
     isvalidLength () {
-      return validLength(this.password, { len1: 30, len2: 8 })
+      return validLength(this.password, { len1: 8, len2: 30 })
     },
     isnicknameLength () {
-      return validLength(this.username, { len1: 20 })
+      return validLength(this.username, { len2: 20 })
     },
     isusernamevalid () {
       return this.username && !this.isnicknameLength
     }
   },
+  created () {
+    // 기존 사용자의 닉네임을 보여줍니다.
+    this.username = this.getUser.username
+    //  이미지 데이터 초기화
+    if (this.getImagePath.length !== 0) {
+      return this.resetImgagePath()
+    }
+  },
   methods: {
+    ...mapMutations('books', ['resetImgagePath']),
     ...mapActions('user', ['updateProfile', 'updatePassword']),
     ...mapActions('books', ['uploadImg']),
+    // 프로파일 정보 수정(닉네임,프로파일 이미지 수정)
     onChangeProfile () {
       const userinfo = { username: this.username, thumbnail: this.getImagePath }
       this.updateProfile(userinfo)
       this.$router.push('/user/profile')
     },
+    // 이미지 업로드
     onChangeImage (e) {
       const selectedFile = e.target.files[0]
       const imageFormData = new FormData()
       imageFormData.append('photo', selectedFile)
       this.uploadImg(imageFormData, { user: true })
     },
+    // 비밈번호 변경
     onChangePassword () {
       this.updatePassword({ password: this.password })
       this.$router.push('/user/profile')

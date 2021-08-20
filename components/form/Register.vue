@@ -3,6 +3,7 @@
     <div class="formbx">
       <form @submit.prevent="UserRegister">
         <h2>회원가입</h2>
+        <!-- 이메일 -->
         <div :class="{'invalid':!user.email}">
           <label for="email">email</label>
           <input id="email" ref="emailinput" v-model="user.email" type="text" placeholder="이메일">
@@ -10,10 +11,12 @@
         <div v-if="!isvalidEmail && user.email" class="err">
           이메일 형식으로 입력해주세요
         </div>
+        <!-- 닉네임 -->
         <div :class="{'invalid':!user.username}">
           <label for="username">username</label>
           <input id="username" v-model="user.username" type="text" placeholder="닉네임">
         </div>
+        <!-- 비밀번호 -->
         <div :class="{'invalid':!password}">
           <label for="password">password</label>
           <input id="password" v-model="password" type="password" placeholder="비밀번호">
@@ -21,6 +24,7 @@
         <div v-if="!isvalidLength && password" class="err">
           비밀번호는 8자리 이상 30자 이하여야 합니다.
         </div>
+        <!-- 비밀번호 확인 -->
         <div :class="{'invalid':!confirm_password}">
           <label for="comfirm_password">comfirm_password</label>
           <input id="comfirm_password" v-model="confirm_password" type="password" placeholder="비밀번호 확인">
@@ -28,14 +32,16 @@
             비밀번호가 일치하지 않습니다
           </div>
         </div>
+        <!-- 에러 메세지 -->
         <div>
-          <div v-if="errmsg" class="errmsg" :class="{'visible':email}">
+          <div v-if="errmsg" class="errmsg" :class="{'visible':errmsg}">
             {{ errmsg }}
           </div>
           <div v-if="!isuserInfoLength " class="errmsg" :class="{'visible':!isuserInfoLength }">
-            {{ inpurErrMsg }}
+            {{ inputErrMsg }}
           </div>
-          <button class="primary-btn" type="submit" :disabled="!totalConfirm">
+          <!-- 회원가입 버튼 -->
+          <button class="primary-btn" type="submit" :disabled="!disabledBtn">
             회원가입
           </button>
           <p class="signup">
@@ -64,30 +70,35 @@ export default {
       },
       password: '',
       confirm_password: '',
-      errmsg: '',
-      active: false
+      errmsg: ''
     }
   },
   computed: {
+  //  1. 비밀번호 길이 검사
     isvalidLength () {
-      return validLength(this.password, { len1: 30, len2: 8 })
+      return validLength(this.password, { len1: 8, len2: 30 })
     },
+    // 2. 이메일 유효성 검사
     isvalidEmail () {
       return validEmail(this.user.email)
     },
+    // 3. `data`의 `password` 의 값과 `data`의 `confirm_password` 의 값이 일치하는지 검사
     isconfirmPassword () {
       return this.password === this.confirm_password
     },
+    // 4. 이메일과 닉네임의 길이 검사
     isuserInfoLength () {
       return Object.keys(this.user).every((key) => {
-        return validLength(this.user[key], { len1: 20 })
+        return validLength(this.user[key], { len2: 20 })
       })
     },
-    inpurErrMsg () {
+    // 입력데이터에 따른 에러 메세지
+    inputErrMsg () {
       if (!this.user.email && !this.user.username) { return }
       return !this.isuserInfoLength ? '입력값은 20자리 이하로 입력해주세요.' : ''
     },
-    totalConfirm () {
+    // 유효성 검사 확인하여 로그인 버튼 활성화 여부
+    disabledBtn () {
       return this.isvalidLength && this.isvalidEmail && this.isconfirmPassword && this.isuserInfoLength
     }
   },
@@ -98,12 +109,12 @@ export default {
     ...mapActions('user', ['register']),
     async UserRegister () {
       try {
-        const userinfo = {
+        const userData = {
           email: this.user.email,
           username: this.user.username,
           password: this.password
         }
-        await this.register(userinfo)
+        await this.register(userData)
         // 성공적으로 회원가입되면 메인페이지로 이동
         this.$router.push('/')
       } catch (error) {
@@ -116,8 +127,7 @@ export default {
       }
     },
     resetInput () {
-      this.email = ''
-      this.username = ''
+      Object.keys(this.user).forEach((key) => { this.user[key] = '' })
       this.password = ''
       this.confirm_password = ''
     },

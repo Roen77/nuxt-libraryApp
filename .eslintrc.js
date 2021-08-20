@@ -7,8 +7,7 @@ module.exports = {
     sourceType: 'module'
   },
   parserOptions: {
-    parser: 'babel-eslint',
-    // sourceType: 'module'
+    parser: 'babel-eslint'
   },
   extends: [
     '@nuxtjs',
@@ -22,6 +21,7 @@ module.exports = {
   rules: {
     'vue/html-self-closing': 'off',
     'no-console': 'off',
-    'vue/require-default-prop': 'off'
+    'vue/require-default-prop': 'off',
+    'Trailing spaces not allowed':'off'
   }
 }

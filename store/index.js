@@ -1,10 +1,10 @@
 
 export const state = () => ({
-  loading: false
+  initLoading: false
 })
 export const mutations = {
   changeLoading (state, value) {
-    state.loading = value
+    state.initLoading = value
   }
 }
 export const actions = {

@@ -1,5 +1,7 @@
 export const state = () => ({
+  // 코멘트
   comments: [],
+  // 코멘트 정보
   commentPage: {
     commentCount: 0,
     end: false
@@ -15,17 +17,20 @@ export const getters = {
 }
 export const mutations = {
   // comment
-  loadComments (state, commentInfo) {
-    console.log('zjjjjj커ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ미ㅛ')
-    const { data, init } = commentInfo
+  loadComments (state, commentData) {
+    const { data, init } = commentData
+    // 처음 데이터를 불러올 때 배열에 저장합니다.
     if (init) {
       state.comments = [...data.comments]
     } else {
+    // 처음이 아니라면 배열에 누적시켜 데이터를 보여줍니다.
       data.comments.forEach((comment) => {
         state.comments.push(comment)
       })
     }
+    // 코멘트를 10개씩 호출했을 때, 더이상 호출할 코멘트가 남아있지않다면, 호출하지 않기위해 데이터를 저장합니다.
     state.commentPage.end = data.end
+    // 코멘트의 갯수를 보여주기위해 코멘트의 갯수 데이터를 저장합니다.
     state.commentPage.commentCount = data.commentCount
   },
   createComment (state, comment) {
@@ -43,20 +48,17 @@ export const mutations = {
 export const actions = {
   // 코멘트
   async fetchComments ({ commit, state }, comments) {
-    console.log('일단 함수 호출 이거일단개무시함ㅋ')
     try {
       let res
+      // 처음으로 댓글보기 버튼을 클릭했을 때,
       if (comments.init) {
         // 삭제시 다시 10개 댓글 가져오도록 하기(단 총 댓글갯수가 10개 미만이면 굳이 가져올 필요없음)
         if (comments.removeState && state.commentPage.commentCount < 10) { return }
-        console.log('일단 리셋하기전호출되는건지?', comments.bookId, '개같네??')
-        // commit('resetComment')
-        console.log('호출이안되는건지...?')
+        commit('resetComment')
         res = await this.$axios.get(`books/${comments.bookId}/comments?limit=10`)
-        console.log(res, '데이터확인좀')
+      // 처음이 아닌 다음 댓글을 가져올 때,
       } else {
         const lastComment = state.comments && state.comments[state.comments.length - 1]
-        console.log('라스트 코멘트 추가호출됨', lastComment)
         res = await this.$axios.get(`books/${comments.bookId}/comments?lastId=${lastComment && lastComment.id}&limit=10&page=${comments.page}`)
       }
 

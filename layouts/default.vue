@@ -4,7 +4,7 @@
     <main class="main_container">
       <div class="inner">
         <Nuxt />
-        <div class="topbtn">
+        <div class="topbtn" :class="{ 'fixed': fix }">
           top
         </div>
       </div>
@@ -15,30 +15,14 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
 import bus from '~/utils/bus'
 export default {
   middleware: 'authorize',
   data () {
     return {
       alertState: false,
-      data: ''
-    }
-  },
-  computed: {
-    ...mapGetters({ books: 'books/getsearchbooks', Thumbnail: 'books/getImagePath' })
-  },
-  watch: {
-    // 라우터가 변경되면 기존 검색기능 초기화할 수 있도록 하기
-    // 라우터가 변경되면 썸네일 이미지가 저장하지 않은 경우에는 초기화할 수 있도록 하기
-    $route () {
-      if (this.books.length !== 0) {
-        console.log(this.books)
-        return this.initsearchBook()
-      }
-      if (this.Thumbnail.length !== 0) {
-        return this.resetImgagePath()
-      }
+      data: '',
+      fix: false
     }
   },
   created () {
@@ -50,6 +34,7 @@ export default {
   },
   mounted () {
     const top = document.querySelector('.topbtn')
+    window.addEventListener('scroll', this.checkHeight)
     top.addEventListener('click', function () {
       window.scrollTo({
         top: 0,
@@ -57,16 +42,20 @@ export default {
       })
     })
   },
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.checkHeight)
+  },
   methods: {
-    ...mapMutations('books', ['initsearchBook', 'resetImgagePath']),
     onalert () {
       this.alertState = true
     },
     offalert () {
       this.alertState = false
+    },
+    checkHeight () {
+      this.fix = window.scrollY > 0
     }
   }
-
 }
 </script>
 
@@ -76,6 +65,7 @@ export default {
 background-image: url(/images/main_bg.jpg); background-position: left  bottom 70px; background-size: 450px; background-repeat: no-repeat;
 }
 .topbtn{
+  display: none;
   cursor: pointer;
   position: fixed;
   right: 16px;
@@ -85,9 +75,6 @@ background-image: url(/images/main_bg.jpg); background-position: left  bottom 70
   border-radius: 10px;
   color:#fff;
   z-index: 9999;
-
 }
-@media (max-width:440px) {
-  .default.container{background-size: 350px;}
-}
+.topbtn.fixed{display: block;}
 </style>

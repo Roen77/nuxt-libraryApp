@@ -1,29 +1,21 @@
 <template>
-  <div v-if="showPage" class="pagination">
-    <div class="page_inner">
-      <button v-show="!onactive(0)" class="first" @click="onPageFirst(0)">
-        <i class="fas fa-angle-double-left"></i>
-      </button>
-      <div class="page">
-        <button
-          v-for="(page,index) in totalPage"
-          :key="page"
-          :class="{'active':getCurrentPage=== index}"
-          @click=" onPagination(index)"
-        >
-          {{ page }}
-        </button>
-      </div>
-      <button v-show="!onactive(totalPage-1)" class="last" @click=" onPgeLast(totalPage-1)">
-        <i class="fas fa-angle-double-right"></i>
-      </button>
-    </div>
+  <div v-if="showPage" class="pagination_inner">
+    <BPagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      first-number
+      @change="pageClick"
+    />
   </div>
 </template>
 
 <script>
+import { BPagination } from 'bootstrap-vue'
 import { mapGetters } from 'vuex'
 export default {
+  components: { BPagination },
+  // 전체페이지
   props: {
     totalPage: {
       type: Number,
@@ -32,47 +24,46 @@ export default {
   },
   data () {
     return {
-      default: 3
+      perPage: 1,
+      currentPage: 1
     }
   },
   computed: {
     ...mapGetters('books', ['getBooks', 'getCurrentPage']),
+    // 전체 페이지의 수가 1페이지면 페이지네이션을 보여주지 않고, 2페이지 이상일 경우에만 페이지네이션을 보여줍니다.
     showPage () {
       return this.getBooks && this.totalPage > 1
+    },
+    // 전체 페이지
+    rows () {
+      return this.totalPage
+    }
+  },
+  watch: {
+    $route: {
+      handler (to) {
+        const currentPage = parseInt(to.params.page, 10) - 1
+        // 현재 페이지 활성화
+        if (this.getCurrentPage === currentPage) {
+          this.currentPage = parseInt(to.params.page, 10)
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
   methods: {
-    onPagination (index) {
-      if (this.getCurrentPage === index) {
-        return
-      }
-      this.$emit('pagination', index)
-    },
-    onPageFirst (page) {
-      if (this.getCurrentPage === page) {
-        return
-      }
+    pageClick (page) {
       this.$emit('pagination', page)
-    },
-    onPgeLast (page) {
-      if (this.getCurrentPage === page) {
-        return
-      }
-      this.$emit('pagination', page)
-    },
-    onactive (page) {
-      return this.getCurrentPage === page
     }
   }
-
 }
 </script>
 
 <style>
-.pagination{display: block; text-align: center; padding: 50px 0 30px; margin-bottom: 100px;}
-.pagination .page{display: inline-block;}
-.pagination  button{background-color:#ddd; width: 30px; height: 30px; border-radius: 50%; margin: 0 3px;}
-.pagination .page button.active{background-color: #677eff;}
-.pagination  button.first:hover,
-.pagination  button.last:hover{background-color: #3b5999; color:#000;}
+.pagination_inner{position: relative; display: flex; justify-content: center; align-items: center; margin-top: 50px; z-index: 200;}
+.page-item.disabled .page-link{ align-items: center; background-color: #ddd;}
+@media (max-width:360px) {
+  .page-item{width: 27px; height: 27px;}
+}
 </style>

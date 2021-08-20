@@ -1,13 +1,15 @@
 <template>
   <div class="book-details">
-    <!-- 책이 있을 경우에만 보여준다. -->
-    <div v-if="getBook">
+    <div>
       <BookCardDetail :book="getBook" />
-      <div class="control_btns">
+      <div class="control_btns"
+      >
         <div class="left_btn">
+          <!-- 삭제 버튼 -->
           <button class="primary-btn red" @click="onremoveBook">
             <i class="fas fa-trash-alt"></i>삭제
           </button>
+          <!-- 수정 버튼 -->
           <button class="primary-btn" @click="onEditBook">
             <i class="fas fa-pen-square"></i>수정
           </button>
@@ -23,9 +25,6 @@
       <CommentEdit />
       <FormAlert v-if="alert" :data="getBook && getBook.title" :confirm="`삭제`" @onagree=" agree" @ondisagree="disagree" />
     </div>
-    <div v-else>
-      <BookEmpty />
-    </div>
   </div>
 </template>
 
@@ -35,8 +34,8 @@ export default {
   async asyncData ({ store, params }) {
     try {
       await store.dispatch('books/fetchBook', { id: params.id })
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      console.log(err)
     }
   },
   data () {
@@ -84,6 +83,7 @@ export default {
       try {
         this.deleteBook({ id: this.$route.params.id })
           .then(() => {
+            // 삭제 후 라우터 이동
             this.$router.push('/books/1')
           })
       } catch (error) {

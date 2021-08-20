@@ -89,7 +89,6 @@ export default {
           this.newtagnames.push(newtag)
         }
       })
-      console.log(this.newtagnames)
     }
 
   }

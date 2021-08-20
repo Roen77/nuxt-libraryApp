@@ -30,36 +30,33 @@ export const actions = {
       console.error(error)
     }
   },
-  async login ({ commit }, userinfo) {
-    const res = await this.$axios.post('user/login', userinfo)
+  async login ({ commit }, userData) {
+    const res = await this.$axios.post('user/login', userData)
     commit('setUser', res.data)
   },
-  async register ({ commit }, userinfo) {
-    const res = await this.$axios.post('user/register', userinfo)
+  async register ({ commit }, userData) {
+    const res = await this.$axios.post('user/register', userData)
     commit('setUser', res.data)
   },
-  async logout ({ commit }, userinfo) {
+  async logout ({ commit }, userData) {
     try {
-      const res = await this.$axios.get('user/logout', userinfo)
+      await this.$axios.get('user/logout', userData)
       commit('setUser', null)
-      console.log(res.data)
     } catch (error) {
       console.error(error)
     }
   },
-  async updateProfile ({ commit }, userinfo) {
+  async updateProfile ({ commit }, userData) {
     try {
-      const res = await this.$axios.put('user', userinfo)
-      console.log(res.data)
+      const res = await this.$axios.put('user', userData)
       commit('setUser', res.data.user)
     } catch (error) {
       console.error(error)
     }
   },
-  async updatePassword (_, userinfo) {
+  async updatePassword (_, userData) {
     try {
-      const res = await this.$axios.patch('user', userinfo)
-      console.log(res.data)
+      await this.$axios.patch('user', userData)
     } catch (error) {
       console.error(error)
     }

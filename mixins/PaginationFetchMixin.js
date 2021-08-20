@@ -17,8 +17,8 @@ export default {
           totalPage = res.data.totalPage
         })
       return { total, totalPage }
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      console.error(err)
     }
   },
   computed: {
@@ -29,21 +29,20 @@ export default {
   },
   methods: {
     ...mapActions('books', ['fetchBooks']),
-    pagination (index) {
+    pagination (page) {
       switch (this.$route.name) {
         case 'books-page':
-          return this.$router.push(`/books/${index + 1}`)
+          return this.$router.push(`/books/${page}`)
         case 'books-others-page':
-          return this.$router.push(`/books/others/${index + 1}`)
+          return this.$router.push(`/books/others/${page}`)
         case 'books-search-page':
-          return this.$router.push(`/books/search/${index + 1}?search=${this.getSearch.selectedOption}&target=${this.getSearch.data}`)
+          return this.$router.push(`/books/search/${page}?search=${this.getSearch.selectedOption}&target=${this.getSearch.data}`)
         case 'hashtags-page':
-          return this.$router.push(`/books/hashtags/${index + 1}?name=${this.$route.query.name}`)
+          return this.$router.push(`/books/hashtags/${page}?name=${this.$route.query.name}`)
         default:
           break
       }
     }
 
   }
-
 }

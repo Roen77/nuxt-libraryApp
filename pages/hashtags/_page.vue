@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="getBooks.length>0" class="bookshelf">
+    <div class="bookshelf">
       <h2 v-if="getBooks[0].Hashtags[0]" class="tagname">
         #{{ getBooks[0].Hashtags[0].name }}
       </h2>
@@ -10,10 +10,7 @@
         </div>
       </div>
       <!-- books -->
-      <BookPagination :total-page="totalPage" @pageFirst="pagination" @pagination="pagination" @pageLast="pagination" />
-    </div>
-    <div v-else>
-      <BookEmpty />
+      <BookPagination :total-page="totalPage" @pagination="pagination" />
     </div>
   </div>
 </template>

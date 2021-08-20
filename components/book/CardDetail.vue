@@ -6,8 +6,8 @@
       </h2>
       <div class="book_detail">
         <div class="book_thumbnail">
-          <img v-if="book.thumbnail" :src="book.thumbnail" alt="썸네일 이미지">
-          <img v-else src="/images/book.png" alt="썸네일 이미지">
+          <img v-if="book.thumbnail" :src="onResizeImage" alt="썸네일 이미지">
+          <img v-else src="/images/sample_book.svg" alt="썸네일 이미지">
         </div>
         <div class="book_content">
           <h2>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { resizeImage } from '~/utils/resizeImage'
 export default {
   props: {
     book: {
@@ -58,7 +58,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(['loading'])
+    onResizeImage () {
+      return resizeImage(this.book.thumbnail)
+    }
   },
   methods: {
     bookauthorsFormat (authors) {
@@ -69,17 +71,15 @@ export default {
       }
     }
   }
-
 }
 </script>
 
 <style>
-.skeletons-area{overflow: hidden; width: 100%; }
 .book_user{margin-bottom: 20px;}
 .book_detail{position: relative; overflow: hidden; display: flex; box-shadow: 0 0 3px rgba(0, 0, 0, 0.397); padding: 15px; box-sizing: border-box; background-color: #fff;}
 .book_detail .add_detail{position: absolute; right: 0; top:0;}
-.book_detail .book_thumbnail{position: relative; z-index: 10; display: flex; justify-content: center; align-items: center; width: 20%;}
-.book_detail .book_thumbnail img{width: 150px; box-shadow: 1px 7px 5px rgba(0, 0, 0, 0.397);}
+.book_detail .book_thumbnail{position: relative; z-index: 10; display: flex; justify-content: center; align-items: center; width: 200px; height: 300px;}
+.book_detail .book_thumbnail img{width: 200px; height: 300px; box-shadow: 1px 7px 5px rgba(0, 0, 0, 0.397);}
 .book_detail .book_content{margin-left: 15px; width: 80%;}
 .book_detail .book_content>div{margin: 5px;}
 .book_detail .book_content h2{font-size: 27px; font-weight: bold;}
@@ -92,7 +92,6 @@ export default {
 @media (max-width:700px) {
 .book_detail{display: block;}
 .book_detail .book_thumbnail{width: 100%;}
-.book_detail .book_thumbnail img{width: 150px;}
 .book_detail .book_content{margin-left: 0; margin-top: 10px; width: 100%;}
 .book_detail .book_content h2{font-size: 23px;}
 .book_detail .book_content p{font-size: 14px; line-height: 1.6;}

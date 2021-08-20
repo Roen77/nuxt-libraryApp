@@ -1,23 +1,28 @@
 <template>
   <li>
+     <!-- 댓글 썸네일 이미지 -->
     <div class="c_thumbnail">
-      <span v-if="comment.User && comment.User.thumbnail"><img :src="comment.User.thumbnail" alt=""></span>
+       <!-- 사용자의 프로필(썸네일) 이미지가 있다면 이미지를 보여줍니다.-->
+      <span v-if="comment.User && comment.User.thumbnail"><img :src="comment.User.thumbnail" alt="썸네일"></span>
+       <!-- 사용자의 프로필(썸네일) 이미지가 없다면 사용자의 닉네임 첫글자를 보여줍니다. -->
       <span v-else>{{ String(comment.User.username)[0] }}</span>
       <p>{{ comment.User.username }}</p>
     </div>
-    <!-- 코멘트 내용 -->
+    <!-- 댓글 내용 -->
     <div class="comment_txt">
       {{ comment.comments }}
     </div>
-    <!-- 코멘트 별점 -->
+    <!-- 댓글 별점 -->
     <div class="comment_star">
       <div v-for="star in comment.rating" :key="star" class="star">
         <i class="fas fa-star">
         </i>
       </div>
     </div>
-    <!-- 코멘트 날짜 -->
-    <div>{{ $moment(`${comment.updatedAt}`).format("LLL") }}</div>
+    <!-- 댓글 날짜 -->
+    <div class="date">
+      {{ $moment(`${comment.updatedAt}`).format("LLL") }}
+    </div>
     <div v-if="myComment(comment.User.username)" class="remove_btn">
       <button class="round-btn fill" @click="onRemoveComment(comment.id)">
         삭제

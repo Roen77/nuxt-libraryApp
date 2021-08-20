@@ -1,42 +1,44 @@
 <template>
   <div class="search-area">
     <!-- form-search -->
-    <form-search v-model="search" :options="options" @searchBook="onSearchBook" @selectedOption="onSeletedOption"></form-search>
+    <FormSearch v-model="search" :options="options" @searchBook="onSearchBook" @selectedOption="onSeletedOption" />
     <div v-if="errmsg" class="err book_search">
       검색 내용을 입력해주세요.
     </div>
     <!-- search-content -->
-    <div class="search-content">
-      <h2>
-        총 {{ meta.pageable_count }} 검색
-      </h2>
-      <h3 v-if="books.length === 0 && meta && meta.pageable_count === 0">
-        검색 결과가 없습니다.
-      </h3>
-      <div v-for="(book,index) in books" :key="index" class="search_book">
-        <!-- book-card-detail -->
-        <book-card-detail :book="book"></book-card-detail>
-        <button class="round-btn addbtn red" @click="onaddBook(book)">
-          추가하기
-        </button>
+    <template v-if="!initLoading">
+      <div class="search-content">
+        <template v-if="books.length">
+          <h2>총 {{ meta.pageable_count }} 검색</h2>
+        </template>
+        <template v-else>
+          <BookEmpty />
+        </template>
+        <div v-for="(book,index) in books" :key="index" class="search_book">
+          <!-- book-card-detail -->
+          <BookCardDetail :book="book" />
+          <button class="round-btn addbtn red" @click="onaddBook(book)">
+            추가하기
+          </button>
+        </div>
       </div>
-    </div>
-    <!-- 더보기 버튼 -->
-    <div v-if="showbtn" ref="btn" class="btn">
-      <div v-if="loading" class="loading-spin">
-        <i class="fas fa-spinner fa-spin"></i>
-      </div>
-      <div v-else>
+      <!-- 더보기 버튼 -->
+      <div v-if="showbtn" ref="btn" class="more">
         <button class="round-btn fill more-btn" @click=" addFetchBook">
           {{ currentCount }} / {{ meta.pageable_count }}
         </button>
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <div class="search_loading">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import bus from '~/utils/bus.js'
 export default {
   data () {
@@ -50,23 +52,31 @@ export default {
       reset: false,
       currentpage: 1,
       showbtn: false,
-      currentCount: 0,
-      loading: false
+      currentCount: 0
     }
   },
   computed: {
-    ...mapGetters({ books: 'books/getsearchbooks', meta: 'books/getmeta' })
+    ...mapGetters({ books: 'books/getBooks', meta: 'books/getmeta' }),
+    ...mapState(['initLoading'])
+  },
+  created () {
+    if (this.books.length !== 0) {
+      return this.initsearchBook()
+    }
   },
   methods: {
-    ...mapMutations('book', ['initBook']),
+    ...mapMutations('books', ['initsearchBook']),
     ...mapActions('books', ['SearchBooks', 'createBook']),
     onSearchBook () {
+      // 기존 데이터 초기화
       this.resetBook(true)
       this.currentpage = 1
       this.currentCount = 0
+      // 검색한 책 데이터 불러오기
       this.onFetchbook()
     },
     onFetchbook () {
+      // 입력폼에 아무것도 작성하지 않고 엔터를 누른다면 사용자에게 에러메세지로 알려주고,return 해줍니다.
       if (this.search.length <= 0) {
         this.errmsg = true
         return
@@ -91,16 +101,15 @@ export default {
         default:
           break
       }
-      this.loading = true
       this.SearchBooks(bookinfo)
         .then(() => {
           this.errmsg = false
           this.currentCount += this.size
           this.isend = this.meta.is_end
           this.showbutton()
-          this.loading = false
         })
     },
+    // 더보기 버튼 클릭시 다음 데이터 호출
     addFetchBook () {
       if (!this.isend) {
         this.currentpage++
@@ -108,20 +117,23 @@ export default {
         this.onFetchbook()
       }
     },
+    //  book.authors 는 배열이므로, 문자열로 포맷합니다.
     bookauthors (authors) {
       return authors.join(',')
     },
     resetBook (boolean) {
       this.reset = boolean
     },
+    // 마지막페이지라면 더보기 버튼이 보여지지 않도록 합니다.
     showbutton () {
       this.isend ? this.showbtn = false : this.showbtn = true
     },
     async onaddBook (book) {
       try {
-        const bookinfo = { title: book.title, contents: book.contents, datetime: book.datetime, isbn: book.isbn, publisher: book.publisher, thumbnail: book.thumbnail, url: book.url, authors: this.bookauthors(book.authors) }
-        await this.createBook(bookinfo)
+        const bookData = { title: book.title, contents: book.contents, datetime: book.datetime, isbn: book.isbn, publisher: book.publisher, thumbnail: book.thumbnail, url: book.url, authors: this.bookauthors(book.authors) }
+        await this.createBook(bookData)
           .then((res) => {
+            // 데이터가 성공적으로 호출됐을 때 알림메세지로 알려주도록 구현했습니다.
             bus.$emit('on:alert', res.data.msg)
             setTimeout(() => {
               bus.$emit('off:alert')
@@ -129,6 +141,7 @@ export default {
           })
       } catch (error) {
         console.log(error)
+        // 이미 저장된 데이터를 또 추가하려고 할 때, 알림메세지로 알려주도록 구현했습니다.
         bus.$emit('on:alert', error.response.data.msg)
         setTimeout(() => {
           bus.$emit('off:alert')
@@ -146,4 +159,6 @@ export default {
 <style>
 .book_search.err{text-align: center; margin-bottom: 1%;}
 .search-area{padding-bottom: 100px;}
+.search_loading{display: flex; justify-content: center; align-items: center;  width: 100%;}
+.search_loading .fas{color:gold; font-size: 22px; padding: 20px 0;}
 </style>

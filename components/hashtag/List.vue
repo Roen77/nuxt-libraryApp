@@ -44,7 +44,6 @@ export default {
       this.tagNum = tagNum
     },
     onRemoveHashtag (id) {
-      console.log(id)
       this.deleteHashtag({ bookId: this.bookId, hashtagId: id })
     }
   }
@@ -54,7 +53,8 @@ export default {
 
 <style>
 .hashtags.tagList{box-shadow: none;}
-.hashtags{display: flex; flex-wrap: wrap; margin: 5px; background-color: #fff; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);}
+.hashtags{display: flex; flex-wrap: wrap; margin: 5px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.281); background-color: #fff;}
+.txt .hashtags{ background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(234, 249, 249, 0.952) 0.1%, rgba(239, 249, 251, 0.918) 90.1% );}
 .hashtags .tag{position: relative; display: flex;  background-color: skyblue; color:#222; border-radius: 20px; align-items: center; justify-content: center;padding: 7px; margin: 0.5%;}
 .hashtags .tag span{position: absolute; cursor: pointer; z-index: 10; font-size: 20px; transform: rotate(45deg); right: -20px; top:-7px;}
 

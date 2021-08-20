@@ -1,5 +1,6 @@
 <template>
   <div class="container home">
+    <IeCheck />
     <AppHeader />
     <main class="home_main">
       <Nuxt />

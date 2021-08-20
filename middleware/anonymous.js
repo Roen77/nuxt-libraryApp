@@ -1,5 +1,5 @@
-export default function ({ store, redirect }) {
+export default function ({ store, route, redirect }) {
   if (store.state.user.user) {
-    redirect('/')
+    return redirect('/')
   }
 }

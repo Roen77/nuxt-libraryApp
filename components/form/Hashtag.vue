@@ -11,7 +11,7 @@
         <p v-if="currentHashtagsLen || !ishashtagLen" class="err">
           {{ hashtagErrMsg }}
         </p>
-        <p v-if="ishashtags && ishashtags.length===0" class="err">
+        <p v-if="hashtagchk" class="err">
           추가할 태그에 #을 붙여주세요.
         </p>
         <p v-if="msg" class="err">
@@ -39,7 +39,6 @@ export default {
   data () {
     return {
       hashtag: '',
-      newtagnames: [],
       msg: ''
     }
   },
@@ -47,6 +46,9 @@ export default {
     ishashtags () {
       const tags = new Set(this.hashtag.match(/#[^\s#]+/g))
       return [...tags]
+    },
+    hashtagchk () {
+      return this.ishashtags && this.ishashtags.length === 0
     },
     // 해시태그 유효성 검사
     invalidHashtag () {

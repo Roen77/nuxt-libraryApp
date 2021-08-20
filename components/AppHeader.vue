@@ -1,52 +1,85 @@
 <template>
   <header class="header">
-    <div ref="toggle" :class="{'active': toggleMenu}" class="toggle" @click="toggleactive">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
     <div class="inner">
       <h1 class="logo en">
         <nuxt-link class="primary" to="/">
           <span>S</span>'BOOK
         </nuxt-link>
       </h1>
-      <div class="right_menu" :class="{'active': toggleMenu,'inactive':invisible}">
-        <a class="menu_btn" @click="invisibleMenu ">
-          <i class="fas fa-arrow-left"></i>
-        </a>
+      <div
+        class="right_menu"
+        :class="{ active: toggleMenu, inactive: invisible }"
+      >
         <nav v-if="getUser">
           <div class="gnb">
-            <nuxt-link to="/books/1" class="round-btn my" :class="{'nuxt-link-active':router.me}">
+            <nuxt-link
+              to="/books/1"
+              class="round-btn my"
+              :class="{ 'nuxt-link-active': router.me }"
+            >
               나만의 책장
             </nuxt-link>
-            <nuxt-link :to="`/books/others/1`" class="round-btn others" :class="{'nuxt-link-active':router.other}">
+            <nuxt-link
+              :to="`/books/others/1`"
+              class="round-btn others"
+              :class="{ 'nuxt-link-active': router.other }"
+            >
               다른사람 책장
             </nuxt-link>
           </div>
         </nav>
+        <!--  메뉴 -->
         <div class="m_menu">
           <div v-if="getUser" class="action_menu">
             <div class="profile" @click="onactive">
-              <img v-if="getUser && getUser.thumbnail" class="thumbnail" :src="getUser.thumbnail" alt="">
-              <img v-else class="thumbnail" src="/images/user3.png" alt="">
+              <img
+                v-if="getUser && getUser.thumbnail"
+                class="thumbnail"
+                :src="getUser.thumbnail"
+                alt=""
+              />
+              <img v-else class="thumbnail" src="/images/user3.png" alt="" />
               <span>
                 <b>{{ getUser && getUser.username }}</b>
               </span>
             </div>
-            <div class="menu" :class="{'active':activeMenu}" @click="onactive">
-              <h3>{{ getUser.username }}<br><span>my Profile</span></h3>
-              <ul>
+            <div class="menu" :class="{ active: activeMenu }" @click="onactive">
+              <h3>{{ getUser.username }}<br /><span>my Profile</span></h3>
+              <!-- 모바일 메뉴 -->
+              <ul class="mobile_gnb">
                 <li>
-                  <nuxt-link to="/user/profile" class="my_profile">
-                    <img src="/images/user4.png" alt="">내 프로파일
+                  <nuxt-link
+                    to="/books/1"
+                    class="my"
+                    :class="{ 'nuxt-link-active': router.me }"
+                  >
+                    <img src="/images/bookicon1.png" alt="#" />
+                    나만의 책장
                   </nuxt-link>
                 </li>
                 <li>
-                  <a href="#" @click.prevent="showSearchForm"> <img src="/images/settings.png">다른 사용자 책 검색</a>
+                  <nuxt-link
+                    :to="`/books/others/1`"
+                    class="others"
+                    :class="{ 'nuxt-link-active': router.other }"
+                  >
+                    <img src="/images/bookicon2.png" alt="#" />
+                    다른사람 책장
+                  </nuxt-link>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <nuxt-link to="/user/profile" class="my_profile">
+                    <img src="/images/user4.png" alt="" />내 프로파일
+                  </nuxt-link>
                 </li>
                 <li>
-                  <a href="#" @click="Logout"><img src="/images/logout.png" alt="">로그아웃</a>
+                  <a href="#" @click.prevent="showSearchForm">
+                    <img src="/images/settings.png" />다른 사용자 책 검색</a>
+                </li>
+                <li>
+                  <a href="#" @click="Logout"><img src="/images/logout.png" alt="" />로그아웃</a>
                 </li>
               </ul>
             </div>
@@ -64,9 +97,14 @@
     </div>
     <div v-if="getUser && search.showsearchState" class="search_area">
       <div class="btn">
-        <a href="#" @click.prevent="search.showsearchState=false">검색창 끄기</a>
+        <a href="#" @click.prevent="search.showsearchState = false">검색창 끄기</a>
       </div>
-      <FormSearch v-model="search.input" :options="search.options" @searchBook="onsearchBook" @selectedOption="onselectedOption" />
+      <FormSearch
+        v-model="search.input"
+        :options="search.options"
+        @searchBook="onsearchBook"
+        @selectedOption="onselectedOption"
+      />
     </div>
   </header>
 </template>
@@ -95,14 +133,23 @@ export default {
     ...mapGetters('books', ['getSearch'])
   },
   watch: {
+    // 라우터에 따른 메뉴 활성화
     $route (to) {
-      if (to.name === 'books-others-page') { this.router.other = true } else { this.router.other = false }
-      if (to.name === 'books-page') { this.router.me = true } else { this.router.me = false }
+      if (to.name === 'books-others-page') {
+        this.router.other = true
+      } else {
+        this.router.other = false
+      }
+      if (to.name === 'books-page') {
+        this.router.me = true
+      } else {
+        this.router.me = false
+      }
     }
   },
   methods: {
     ...mapActions('user', ['logout']),
-    ...mapMutations('books', ['searchOption', 'searchData']),
+    ...mapMutations('books', ['updateSearch']),
     Logout () {
       this.$router.push('/')
       this.logout()
@@ -118,32 +165,63 @@ export default {
       this.invisible = true
       this.toggleMenu = false
     },
+    // 기존 검색 데이터 초기화
     showSearchForm () {
       this.search.showsearchState = !this.search.showsearchState
-      this.search.input = ''
-      this.searchOption(this.search.options[0])
+      this.updateSearch({
+        data: '',
+        selectedOption: this.search.options[0]
+      })
     },
     onselectedOption (option) {
-      this.searchOption(option)
+      this.updateSearch({
+        selectedOption: option
+      })
     },
     onsearchBook () {
-      if (this.search.input.length === 0) { return }
-      this.searchData(this.search.input)
-      this.$router.push(`/books/search/1?search=${this.getSearch.selectedOption}&target=${this.search.input}`)
+      // 입력값이 없으면 리턴해준다.
+      if (this.search.input.length === 0) {
+        return
+      }
+      this.updateSearch({
+        data: this.search.input
+      })
+      this.$router.push(
+        `/books/search/1?search=${this.getSearch.selectedOption}&target=${this.search.input}`
+      )
     }
   }
-
 }
 </script>
 
 <style>
-header{position: fixed; left:0; top:0; width: 100%; z-index:9999;}
-header .search_area{position: absolute; left:50%; top:70px; transform: translateX(-50%); width: 55%; z-index: 9999;}
-header .search_area .btn{text-align: center; line-height: 20px;}
-.gnb .nuxt-link-active.round-btn{color:#fff;}
-.gnb .nuxt-link-active.round-btn::before{
-  width:100%;
+header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+header .search_area {
+  position: absolute;
+  left: 50%;
+  top: 70px;
+  transform: translateX(-50%);
+  width: 85%;
+  z-index: 9999;
+}
+header .search_area .btn {
+  text-align: center;
+  line-height: 20px;
+}
+.gnb .nuxt-link-active.round-btn {
+  color: #fff;
+}
+.gnb .nuxt-link-active.round-btn::before {
+  width: 100%;
   border-radius: 0;
 }
-.gnb a{margin: 5px;}
+.gnb a {
+  margin: 5px;
+}
 </style>

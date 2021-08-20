@@ -1,19 +1,24 @@
 <template>
-  <div>
-    <h1>데이터를 불러오지 못했습니다. 다시 시도해주세요.</h1>
-    <NuxtLink to="/">
-      메인으로 돌아가기
-    </NuxtLink>
+  <div class="err_container">
+    <div class="txt">
+      <h3 v-if="error.msg">
+        {{ error.msg }}
+      </h3>
+      <h2 v-else>
+        오류가 발생하여 다시 시도해주세요.
+      </h2>
+      <p>{{ error.statusCode }}</p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  // layout:'' 여기에 에러날때보여줄페이지넣는듯?
-
+  props: ['error']
 }
 </script>
 
-<style>
-
+<style scoped>
+.err_container{margin-top: 50px; display: flex; align-items: center; justify-content: center; padding: 130px; box-sizing: border-box;  border: 1px solid rgb(153, 223, 190); text-align: center; background-image: url(/images/main_bg3.jpg); background-size:350px; background-repeat: no-repeat; background-position: center; line-height: 30px; font-size: 1.2em;}
+.err_container .txt p{font-size: 14px;}
 </style>

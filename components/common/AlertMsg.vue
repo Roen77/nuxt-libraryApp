@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style>
-.alertmsg{position: fixed; z-index: 9999; left:50%; top:1%; width: 40%; padding: 5px; transform: translateX(-50%);
+.alertmsg{position: fixed; z-index: 9999; left:50%; top:1%; width: 50%; padding: 5px; transform: translateX(-50%);
 color:#fff; background-color: #222; text-align: center; font-size: 14px; border-radius: 15px;
 }
 /* upSlide animation */
@@ -34,8 +34,11 @@ color:#fff; background-color: #222; text-align: center; font-size: 14px; border-
   .upSlide-leave-active {
     transition: all .5s ease-in-out;
   }
-  .upSlide-enter, .upSlide-leave-to/ {
+  .upSlide-enter, .upSlide-leave-to {
     transform:translateX(-50%) translateY(10px);
     opacity: 0;
-  }
+}
+@media (max-width:600px) {
+  .alertmsg{width: 90%;}
+}
 </style>
