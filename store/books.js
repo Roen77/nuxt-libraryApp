@@ -151,6 +151,7 @@ export const actions = {
   // 이미지 업로드
   async uploadImg ({ commit }, payload) {
     try {
+      commit('changeLoading', true, { root: true })
       let res
       if (payload && payload.user) {
         res = await this.$axios.post('user/thumbnail', payload)
@@ -160,6 +161,8 @@ export const actions = {
       commit('setThumbnail', res.data)
     } catch (error) {
       console.error(error)
+    } finally {
+      commit('changeLoading', false, { root: true })
     }
   },
   // 북마크 추가

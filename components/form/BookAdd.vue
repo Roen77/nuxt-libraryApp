@@ -61,11 +61,12 @@
     </div>
     <!-- 책 이미지 추가 -->
     <div class="file_container add">
+      <LoadingBar v-if="initLoading" position />
       <div class="txt">
         <label for="fileinput"><span class="round-btn yellow"><i class="far fa-file-image"></i>책 이미지 추가</span></label>
         <input id="fileinput" style="display:none" type="file" @change="onChangeImage">
       </div>
-      <div v-if="getImagePath.length !== 0" class="photos">
+      <div v-if="getImagePath.length" class="photos">
         <div class="images">
           <img :src="getImagePath" alt="썸네일 이미지">
         </div>
@@ -76,15 +77,18 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="round-btn red addbtn" :disabled="disabledBtn">
+    <div class="err">
+      {{ errmsg }}
+    </div>
+    <button type="submit" class="round-btn red addbtn" :disabled="disabledBtn || errmsg.length !== 0">
       추가하기
     </button>
-    <CommonLenConfirm v-if="!InputLenValid" len="50" />
+    <CommonAlertMsg :alert-state="!InputLenValid" data="50자 이내로 작성해주세요" />
   </form>
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import BookFetchMixin from '~/mixins/BookFetchMixin'
 export default {
   mixins: [BookFetchMixin],
@@ -102,11 +106,14 @@ export default {
       selectedFile: ''
     }
   },
+  computed: {
+    ...mapState(['initLoading'])
+  },
   methods: {
     ...mapActions('books', ['createBook', 'uploadImg']),
     ...mapMutations('books', ['removeThumbnail', 'alertEditComplete']),
-     onaddBook () {
-       this.fetchData()
+    onaddBook () {
+      this.fetchData()
     },
     onRemoveImage () {
       this.selectedFile = null
@@ -120,6 +127,7 @@ export default {
 .form_content.addform{padding: 0 150px; margin-bottom: 100px;}
 .main_container .form_content .date_area{display: flex; align-items: center;}
 .main_container .form_content .date_area label{margin-right: auto;}
+.img_container{position: relative;}
 @media (max-width:1200px) {
   .form_content.addform{padding: 0 30px;}
 }

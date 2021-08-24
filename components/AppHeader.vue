@@ -40,11 +40,14 @@
               />
               <img v-else class="thumbnail" src="/images/user3.png" alt="" />
               <span>
-                <b>{{ getUser && getUser.username }}</b>
+                <b class="cut main_nickname">{{ getUser && getUser.username }} </b>
               </span>
             </div>
             <div class="menu" :class="{ active: activeMenu }" @click="onactive">
-              <h3>{{ getUser.username }}<br /><span>my Profile</span></h3>
+              <h3 class="cut">
+                {{ getUser.username }}
+              </h3>
+              <span class="info">my Profile</span>
               <!-- 모바일 메뉴 -->
               <ul class="mobile_gnb">
                 <li>
@@ -84,7 +87,7 @@
               </ul>
             </div>
           </div>
-          <div v-else>
+          <div v-else class="login_menu">
             <nuxt-link class="primary-btn" to="/auth/register">
               회원가입
             </nuxt-link>
@@ -96,7 +99,7 @@
       </div>
     </div>
     <div v-if="getUser && search.showsearchState" class="search_area">
-      <div class="btn">
+      <div class="search_btn">
         <a href="#" @click.prevent="search.showsearchState = false">검색창 끄기</a>
       </div>
       <FormSearch
@@ -203,6 +206,11 @@ header {
   z-index: 9999;
 }
 header .search_area {
+  background-color: rgba(255, 255, 255, 0.863);
+  padding-bottom: 10px;
+  margin-top: 5px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,.5);
   position: absolute;
   left: 50%;
   top: 70px;
@@ -210,9 +218,11 @@ header .search_area {
   width: 85%;
   z-index: 9999;
 }
-header .search_area .btn {
+header .search_area .search_btn {
+ display: block;
   text-align: center;
   line-height: 20px;
+  margin-bottom: 3px;
 }
 .gnb .nuxt-link-active.round-btn {
   color: #fff;
@@ -224,4 +234,5 @@ header .search_area .btn {
 .gnb a {
   margin: 5px;
 }
+.main_nickname{display: inline-block; max-width: 75px;}
 </style>

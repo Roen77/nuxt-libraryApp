@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h2 class="sub_head">책추가</h2>
+    <h2 class="sub_head">
+      책추가
+    </h2>
     <FormBookAdd />
   </div>
 </template>

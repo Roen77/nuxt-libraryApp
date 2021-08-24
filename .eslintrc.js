@@ -3,11 +3,11 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    'cypress/globals': true,
-    sourceType: 'module'
+    'cypress/globals': true
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
+    sourceType: 'module'
   },
   extends: [
     '@nuxtjs',
@@ -22,6 +22,6 @@ module.exports = {
     'vue/html-self-closing': 'off',
     'no-console': 'off',
     'vue/require-default-prop': 'off',
-    'Trailing spaces not allowed':'off'
+    'no-trailing-spaces': 'off'
   }
 }

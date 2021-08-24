@@ -77,4 +77,10 @@ background-image: url(/images/main_bg.jpg); background-position: left  bottom 70
   z-index: 9999;
 }
 .topbtn.fixed{display: block;}
+@media (max-width:600px){
+  .default.container{
+    background-size: 300px;
+    background-position: left -60px bottom 70px;
+  }
+}
 </style>

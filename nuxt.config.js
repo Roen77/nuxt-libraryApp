@@ -79,7 +79,8 @@ module.exports = {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'en'
+      name: 'Library App',
+      lang: 'ko'
     }
   },
   build: {
@@ -96,6 +97,5 @@ module.exports = {
   // }
   server: {
     port: process.env.PORT || 3000
-  }
-
+  },
 }

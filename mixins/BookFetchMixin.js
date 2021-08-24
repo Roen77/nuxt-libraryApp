@@ -2,6 +2,11 @@ import { mapGetters } from 'vuex'
 import bus from '~/utils/bus'
 import { inputLen } from '~/utils/validate'
 export default {
+  data () {
+    return {
+      errmsg: ''
+    }
+  },
   //  마운트될 때, 타이틀입력폼 태그에 포커스되도록 구현
   mounted () {
     if (!this.$refs.titleInput) { return }
@@ -24,10 +29,11 @@ export default {
     async fetchData () {
       try {
         const data = new FormData()
-        const imageFile = this.selectedFile || this.mybook.thumbnail
+        const imageFile = this.mybook && !this.selectedFile ? this.mybook.thumbnail : this.selectedFile
+        const date = this.newBook && this.newBook.datetime ? new Date(this.newBook.datetime) : new Date()
         data.append('title', this.newBook.title)
         data.append('contents', this.newBook.contents)
-        data.append('datetime', new Date(this.newBook.datetime))
+        data.append('datetime', date)
         data.append('isbn', this.newBook.isbn)
         data.append('publisher', this.newBook.publisher)
         data.append('photo', imageFile)
@@ -66,10 +72,26 @@ export default {
     },
     // 이미지 미리보기 업로드
     onChangeImage (e) {
-      this.selectedFile = e.target.files[0]
       const imageFormData = new FormData()
+      this.selectedFile = e.target.files[0]
+      const maxSize = 1024 * 1024
+      console.log(this.selectedFile, '????????????')
+      const imageType = /^image/.test(this.selectedFile && this.selectedFile.type)
+      if (!imageType) {
+        this.selectedFile = ''
+        this.errmsg = '이미지 타입만 업로드해주세요.'
+        return
+      }
+      if (this.selectedFile.size > maxSize) {
+        this.selectedFile = ''
+        this.errmsg = '용량을 초과하였습니다. 1mb 이하로 업로드해주세요.'
+        return
+      }
+
       imageFormData.append('photo', this.selectedFile)
       this.uploadImg(imageFormData)
+        // eslint-disable-next-line no-return-assign
+        .then(() => this.errmsg = '')
     },
     // 엑스버튼을 클릭할 시, 초기화 시켜주는 함수
     resetInput (e, data) {

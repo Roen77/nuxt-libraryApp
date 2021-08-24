@@ -18,19 +18,24 @@
         </div>
         <!-- 포르필 이미지 수정 -->
         <div class="file_container add">
+          <LoadingBar v-if="$store.state.initLoading" position />
           <div class="txt">
-            <label for="fileinput"><span class="round-btn yellow"><i class="far fa-file-image"></i>프로필 이미지 수정</span></label>
+            <label for="fileinput"><span class="round-btn yellow"><i class="far fa-file-image"></i>프로필 이미지
+              수정</span></label>
             <input id="fileinput" ref="file" style="display:none" type="file" @change="onChangeImage">
           </div>
           <!-- 이미지 사진 보여주기 -->
-          <div v-if="getImagePath" class="photos">
+          <div class="photos">
             <div class="images">
               <img v-if="getImagePath.length === 0 &&getUser.thumbnail" :src="getUser.thumbnail" alt="userprofile">
               <img v-if="getImagePath.length>0" :src="`${getImagePath}`" alt="">
             </div>
           </div>
         </div>
-        <button class="round-btn" type="submit" :disabled="isusernamevalid">
+        <div class="err">
+          {{ errmsg }}
+        </div>
+        <button class="round-btn" type="submit" :disabled="errmsg.length !== 0 || isusernamevalid">
           프로필 정보 수정
         </button>
       </form>
@@ -85,7 +90,8 @@ export default {
       isChangePassword: false,
       password: '',
       confirm_password: '',
-      selectedFile: ''
+      selectedFile: '',
+      errmsg: ''
 
     }
   },
@@ -119,16 +125,32 @@ export default {
     ...mapActions('books', ['uploadImg']),
     // 프로파일 정보 수정(닉네임,프로파일 이미지 수정)
     onChangeProfile () {
+      console.log(this.getImagePath, '확인좀222')
       const userinfo = { username: this.username, thumbnail: this.getImagePath }
       this.updateProfile(userinfo)
       this.$router.push('/user/profile')
     },
     // 이미지 업로드
     onChangeImage (e) {
-      const selectedFile = e.target.files[0]
       const imageFormData = new FormData()
+      let selectedFile = e.target.files[0]
+      const maxSize = 1024 * 1024
+      const imageType = /^image/.test(selectedFile && selectedFile.type)
+      if (!imageType) {
+        selectedFile = ''
+        this.errmsg = '이미지 타입만 업로드해주세요.'
+        return
+      }
+      if (selectedFile.size > maxSize) {
+        selectedFile = ''
+        this.errmsg = '용량을 초과하였습니다. 1mb 이하로 업로드해주세요.'
+        return
+      }
+      console.log(selectedFile, this.getImagePath)
       imageFormData.append('photo', selectedFile)
       this.uploadImg(imageFormData, { user: true })
+        // eslint-disable-next-line no-return-assign
+        .then(() => this.errmsg = '')
     },
     // 비밈번호 변경
     onChangePassword () {
@@ -146,4 +168,7 @@ export default {
 .profile_content .profile_box .password_form>div{margin: 18px 0;}
 .profile_content .file_container .photos{margin: 30px 0;}
 .profile_content .change-btn{margin: 20px 0;}
+@media (max-width:360px){
+  .profile_content .file_container .photos{margin: 0;}
+}
 </style>

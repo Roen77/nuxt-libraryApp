@@ -27,7 +27,7 @@ export default {
   computed: {
     ...mapGetters('books', ['getSearch']),
     dataCount () {
-      return this.getBooks.length ? this.total : '검색된 책이 없습니다.'
+      return this.getBooks.length ? `${this.total} 검색` : '검색된 책이 없습니다.'
     }
   },
   watch: {

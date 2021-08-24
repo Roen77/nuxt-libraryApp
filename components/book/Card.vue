@@ -26,10 +26,10 @@
         v-if="isNotmybook"
         class="book_font user"
       >
-        {{ book.User.username }}님의 책
+        {{ onLimitLen(book.User.username, 5) }}님의 책
       </p>
       <p class="book_font tit">
-        {{ onLimitLen(book.title, 13) }}
+        {{ onLimitLen(book.title, 10) }}
       </p>
       <p v-if="book && book.authors" class="author book_font">
         {{ book.authors }} 지음
@@ -157,7 +157,7 @@ export default {
   margin-right: 24px;
 }
 .book_font.user {
-  font-size: 25px;
+  font-size: 22px;
   color: royalblue;
   margin-bottom: 5px;
 }
@@ -176,11 +176,5 @@ export default {
 }
 .bookshelf .book .photo:hover .like span {
   color: #fff;
-}
-.loading_area {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>

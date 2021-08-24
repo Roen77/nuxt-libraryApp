@@ -1,6 +1,6 @@
 <template>
   <transition name="upSlide">
-    <div v-if="alertState" class="alertmsg">
+    <div v-if="alertState" class="alertmsg" :style="{ 'background-color': bgcolor }">
       {{ data }}
     </div>
   </transition>
@@ -17,6 +17,11 @@ export default {
     data: {
       type: String,
       required: true
+    },
+    bgcolor: {
+      type: String,
+      required: false,
+      default: '#222'
     }
   }
 
@@ -25,7 +30,7 @@ export default {
 
 <style>
 .alertmsg{position: fixed; z-index: 9999; left:50%; top:1%; width: 50%; padding: 5px; transform: translateX(-50%);
-color:#fff; background-color: #222; text-align: center; font-size: 14px; border-radius: 15px;
+color:#fff;text-align: center; font-size: 14px; border-radius: 15px;
 }
 /* upSlide animation */
 .upSlide-enter-active {

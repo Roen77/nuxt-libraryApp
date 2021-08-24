@@ -1,7 +1,9 @@
 <template>
   <CommonModal class="book_form">
     <div slot="header">
-      <h2 class="sub_head">책 정보 수정</h2>
+      <h2 class="sub_head">
+        책 정보 수정
+      </h2>
       <button class="closebtn round-btn" @click="oneditStateChange">
         닫기
       </button>
@@ -68,10 +70,11 @@
         </div>
         <div class="date_area">
           <label for="">출간날짜</label>
-         <b-form-datepicker id="datepicker" v-model="newBook.datetime"></b-form-datepicker>
+          <b-form-datepicker id="datepicker" v-model="newBook.datetime"></b-form-datepicker>
         </div>
         <!-- 책 이미지 수정 -->
         <div class="file_container edit">
+          <LoadingBar v-if="initLoading" position />
           <div class="txt">
             <label for="fileinput"><span class="round-btn yellow"><i class="far fa-file-image"></i>책 이미지 수정</span></label>
             <input id="fileinput" ref="file" style="display:none" type="file" @change="ChangeImage">
@@ -81,22 +84,25 @@
               <img v-if="showimage && getImagePath.length !== 0" class="image" :src="getImagePath" alt="">
               <img v-if="mybook.thumbnail && !showimage" class="image" :src="mybook.thumbnail" alt="">
             </div>
-              <button v-if="showimage && !mybook.thumbnail || getImagePath.length !== 0" class="deletebtn" type="button" @click="onremoveImage">
-                <i class="fas fa-plus-circle"></i>
-              </button>
+            <button v-if="showingImage" class="deletebtn" type="button" @click="onremoveImage">
+              <i class="fas fa-plus-circle"></i>
+            </button>
           </div>
         </div>
-        <button type="submit" class="round-btn red editbtn" :disabled="disabledBtn">
+        <div class="err">
+          {{ errmsg }}
+        </div>
+        <button type="submit" class="round-btn red editbtn" :disabled="disabledBtn || errmsg.length !== 0">
           수정하기
         </button>
-        <CommonLenConfirm class="invalid_alert" v-if="!InputLenValid" len="50" />
+        <CommonAlertMsg :alert-state="!InputLenValid" data="50자 이내로 작성해주세요" />
       </form>
     </div>
   </CommonModal>
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import BookFetchMixin from '~/mixins/BookFetchMixin'
 export default {
   mixins: [BookFetchMixin],
@@ -120,6 +126,15 @@ export default {
       },
       selectedFile: '',
       resetImage: false
+    }
+  },
+  computed: {
+    ...mapState(['initLoading']),
+    isThunbnail () {
+      return this.showimage && !this.mybook.thumbnail && !this.errmsg
+    },
+    showingImage () {
+      return this.isThunbnail || this.getImagePath.length !== 0
     }
   },
   methods: {

@@ -86,7 +86,7 @@ export default {
 .profile-card .thumbnail img{position: absolute; width: 100%; height: 100%; left:50%; top:50%; transform: translate(-50%,-50%);}
 .profile-card .user_info{color:#fff; font-size: 18px;}
 .profile-card .user_info>div{padding: 10px;}
-.box{margin: 30px 0 100px;}
+.box{margin: 30px 0 100px; background-color: rgba(255, 255, 255, 0.699);}
 .charts{overflow: hidden;}
 .charts>div{width: 49%; margin: 0.5%; float: left;}
 @media (max-width:810px) {

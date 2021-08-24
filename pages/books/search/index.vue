@@ -29,11 +29,9 @@
         </button>
       </div>
     </template>
-    <template v-else>
-      <div class="search_loading">
-        <i class="fas fa-spinner fa-spin"></i>
-      </div>
-    </template>
+    <div v-else class="loading_area">
+      <LoadingBar />
+    </div>
   </div>
 </template>
 
@@ -157,8 +155,7 @@ export default {
 </script>
 
 <style>
+.search-content,.loading_area{margin-top: 10px;}
 .book_search.err{text-align: center; margin-bottom: 1%;}
 .search-area{padding-bottom: 100px;}
-.search_loading{display: flex; justify-content: center; align-items: center;  width: 100%;}
-.search_loading .fas{color:gold; font-size: 22px; padding: 20px 0;}
 </style>

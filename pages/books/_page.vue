@@ -58,7 +58,7 @@ export default {
 .trigger button{display: none;}
 /* .main_container{padding-top: 100px;} */
 .bookshelf{position: relative;}
-.bookshelf .main_menu{position: fixed; bottom:20%; right:5px;  z-index: 50;  min-width: 160px; z-index: 50; text-align: center; z-index: 99999;}
+.bookshelf .main_menu{position: fixed; bottom:180px; right:5px;  z-index: 50;  min-width: 160px; z-index: 50; text-align: center; z-index: 99999;}
 .bookshelf .main_menu .sub_menu{position: relative; padding: 20px; border-radius: 20px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); margin-bottom: 20px; background-color: #fff;}
 .bookshelf .main_menu .sub_menu li a{display: block; transition: all 0.5s; border-bottom: 1px solid #ddd; padding: 8px 0;}
 .bookshelf .main_menu .floating_btn{position: absolute; left:50%; transform: translateX(-50%); padding: 17px;  margin: 0 auto; background-image: linear-gradient( 109.6deg,  rgba(62,161,219,1) 11.2%, rgba(93,52,236,1) 100.2% );  color:#fff;  border-radius: 50%;  font-size: 20px;  transition: all 0.3s ease-in-out; }

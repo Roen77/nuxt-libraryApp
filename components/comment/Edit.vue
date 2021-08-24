@@ -5,11 +5,12 @@
     </button>
     <div v-if="showComment" class="comment">
       <div class="comment_head">
-        <h3>댓글 쓰기</h3>
-        <div v-if="loading" class="loading-spin">
-          <i class="fas fa-spinner fa-spin"></i>
-        </div>
+        <h4>댓글 쓰기</h4>
+        <LoadingBar v-if="loading" />
         <div v-else>
+          <button class="refresh-btn" @click.prevent="fetchData">
+            새로고침
+          </button>
           댓글 :{{ getCommentPage.commentCount }}
         </div>
       </div>
@@ -22,7 +23,7 @@
       </div>
     </div>
     <div ref="trigger" class="trigger">
-      <i v-if="loading" class="fas fa-spinner fa-spin"></i>
+      <LoadingBar v-if="loading" />
     </div>
     <FormAlert v-if="alert" data="댓글" confirm="삭제" @onagree=" agree" @ondisagree="disagree" />
   </div>
@@ -58,8 +59,7 @@ export default {
     ontoggleComment () {
       this.showComment = !this.showComment
     },
-    onshowComments () {
-      this.ontoggleComment()
+    fetchData () {
       if (this.showComment) {
         this.loading = true
         //  처음 데이터를 호출하므로 page는 1로 초기화
@@ -70,16 +70,19 @@ export default {
           })
       }
     },
+    onshowComments () {
+      this.ontoggleComment()
+      this.fetchData()
+    },
     onaddComments () {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if ( this.isaddComment && entry.isIntersecting ) {
+          if (this.isaddComment && entry.isIntersecting) {
             this.loading = true
             this.page++
             this.fetchComments({ bookId: this.$route.params.id, page: this.page })
-              .then(_ => {
-                this.loading = false
-              })
+              // eslint-disable-next-line no-return-assign
+              .then(_ => this.loading = false)
           }
         })
       })
@@ -118,6 +121,7 @@ export default {
   opacity: 0;
   transform: translateY(100px);
 }
+.refresh-btn{background-color: #fff;}
 .comment_head{display: flex; align-items: center;}
 .comment_head>div{margin-left: auto; font-weight: bold;}
 .comment_area{position: relative; padding: 10px 0 100px;}

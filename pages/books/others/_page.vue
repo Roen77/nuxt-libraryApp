@@ -25,14 +25,3 @@ export default {
 
 }
 </script>
-
-<style>
-.head.other_books{display: flex;}
-.head.other_books h2{margin-right: auto;}
-.head.other_books .search_form{margin: 0; width: 600px;}
-@media (max-width:900px) {
-.head.other_books{display: block;}
-.head.other_books h2{margin-bottom: 10px;;}
-.head.other_books .search_form{width: 100%;}
-}
-</style>

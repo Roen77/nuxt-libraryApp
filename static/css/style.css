@@ -5,7 +5,7 @@
 
 /* common */
 .container{width: 100%; max-width: 100%;}
-body{font-family: 'Noto Sans KR', sans-serif; font-size: 16px; line-height: 1.3; font-weight: normal; color:#222;}
+body{font-family: 'Noto Sans KR', sans-serif; font-size: 16px; line-height: 1.3; font-weight: normal; color:#222; min-width: 260px;}
 .inner{width: 1320px; margin: 0 auto;}
 a{color:#222;}
 .en{font-family: 'Josefin Sans', sans-serif;}
@@ -31,7 +31,7 @@ a{color:#222;}
 /* round-btn */
 .round-btn{
     position: relative; z-index: 1; display: inline-block;
-    letter-spacing: 1px;  font-size: 14px; font-weight: bold; height: 40px; cursor: pointer;  color: #222; outline: none; border: none; line-height: 40px; font-weight: bold; transition: all 0.5s;background-color: transparent;  border-radius: 20px; overflow: hidden; padding: 0 17px; 
+    letter-spacing: 1px;  font-size: 14px; font-weight: bold; height: 40px; cursor: pointer;  color: #222; outline: none; border: none; line-height: 40px; font-weight: bold; transition: all 0.5s;background-color: transparent;  border-radius: 20px; overflow: hidden; padding: 0 17px;
 }
 .round-btn::before{content: ''; position: absolute; left:0; top:0; height: 100%; width: 40px; border-radius: 50%; background-color:#677eff; z-index: -1; transition: all 0.5s;}
 .round-btn.red::before{background-color:#F53838 ;}
@@ -61,42 +61,44 @@ a{color:#222;}
 .toggle.active span:nth-child(2){opacity: 0;}
 .toggle.active span:nth-child(1){top:50%; transform: rotate(45deg);}
 .toggle.active span:nth-child(3){top:50%; transform: rotate(-45deg);} */
-/* loading spin */
-.loading-spin{text-align: center;}
 
 /* form 공통요소 */
 .errmsg{color:crimson; font-size: 14px;}
 .err{text-align: right; color:crimson; font-size: 14px;}
 .formbx button:disabled{background-color: #ddd; color:gray; cursor: default; border-color: transparent;}
 .formbx button:disabled:hover{background:#ddd;}
-/* input.invalid,
-textarea.invalid,
-.invalid input{border: 1px solid crimson !important;} */
 .invalid{position: relative; }
 .invalid::after{content:'*'; position: absolute; left:-8px; top:-8px; color:crimson;}
 .main_container .form_content input.readonly{box-shadow:none; background-image: none;}
 .main_container .form_content input.readonly:focus{border:none;}
+.cut{overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+/* 달력 공통 요소 */
+.b-calendar-header{position: relative;}
+.b-calendar .b-calendar-grid-caption{position: relative;}
 /* header */
 .header{ border-bottom: 1px solid #ddd; background-color:#fff;  padding: 10px 0; box-sizing: border-box; z-index: 999;}
 .header .inner{display: flex; height: 50px; line-height: 50px; }
 .header .logo a{display: block;}
 .logo span{color:#FFA024;}
-.header .right_menu{margin-left: auto; display: flex; align-items: center;}
+.header .right_menu{margin-left: auto; display: flex; align-items: center; justify-content: center;}
 .header .right_menu .menu_btn{cursor: pointer; display: block; text-align: center; display: none;}
 .header .right_menu .menu_btn .fas{width: 30px; height: 30px;}
+.header .right_menu .login_menu a:hover{color:#fff;;}
 .header .right_menu .gnb{display: flex; justify-content: center;}
-.header .right_menu .m_menu{margin-left: 100px; height: 100%;}
+.header .right_menu .m_menu{margin-left: 30px; height: 100%;}
 .header .right_menu .m_menu>div{height: 100%;}
 .header .right_menu .m_menu>div a{line-height: 1;}
 .header .right_menu .m_menu span{margin-right: 10px; }
-.header .right_menu .m_menu .profile{display: flex; align-items: center; cursor: pointer;}
-.header .right_menu .m_menu .action_menu{position: relative;} 
+.header .right_menu .m_menu .profile{text-align: center; display: flex; justify-content: center; align-items: center; cursor: pointer;}
+.header .right_menu .m_menu .profile b{display: block;}
+.header .right_menu .m_menu .action_menu{position: relative;}
 .header .right_menu .m_menu .thumbnail{position: relative; display: inline-block;  width: 35px; height: 35px; margin-right: 10px; overflow: hidden; border-radius: 50%;}
 .header .right_menu .m_menu .thumbnail img{position: absolute; left:50%; top:50%; transform: translate(-50%,-50%); width: 100%; height: 100%; vertical-align: top;}
 .action_menu .menu{position: absolute; top:80px; left:-120px; padding: 23px 20px; background-color: #fff; width: 200px; box-shadow: 0 5px 25px  rgba(0, 0, 0, 0.2); transition:top 0.5s; border-radius: 15px; visibility: hidden; opacity: 0; z-index: 999;}
-.action_menu .menu::before{content: ''; position: absolute; top:-8px; right: 53px; width: 20px; height: 20px; background-color: #fff; transform: rotate(45deg); box-shadow: 0 5px 25px  rgba(0, 0, 0, 0.1);}
+.action_menu .menu::before{content: ''; position: absolute; top:-8px; right: 53px; width: 20px; height: 20px; background-color: #fff; transform: rotate(45deg);}
 .action_menu .menu h3{width: 100%; text-align: center; font-size: 18px; line-height: 1.2rem; margin-bottom: 7px;}
-.action_menu .menu h3 span{font-size: 14px; color:#cecece;}
+.action_menu .menu .info{display: block; text-align: center;  font-size: 14px; color:#cecece;}
 .action_menu .menu img{max-width: 20px; margin-right: 10px; padding: 4px; border-radius: 50%; opacity: 0.5;}
 .action_menu .menu ul li{border-top: 1px solid rgba(0, 0, 0, 0.1);}
 .action_menu .menu ul li a{display: flex;  align-items: center; color:#555; padding: 10px 0;}
@@ -147,7 +149,7 @@ textarea.invalid,
 .invalid input{border: 1px solid crimson;}
 .invalid{position: relative; }
 .invalid::after{content:'*'; position: absolute; left:-8px; top:-8px; color:crimson;} */
-  
+
 
 /* form 공통요소 add// edit */
 .main_container .form_content>div{margin: 10px 0;}
@@ -161,10 +163,10 @@ textarea.invalid,
 .main_container .form_content textarea:focus,
 .main_container .form_content input:focus{border: 1px solid #677eff; }
 /* input file */
-.file_container{position: relative;}
+.file_container{ position: relative;}
 .file_container.add{height: 140px;}
 .file_container .txt{position: absolute; left:0; top:50%; transform: translateY(-50%); z-index: 10;}
-.file_container .photos{position: relative; text-align: right; height: 140px;}
+.file_container .photos{ position: relative; text-align: right; height: 140px;}
 .file_container .photos .images{width: 100%; height: 100%;}
 .file_container .photos img{width: 120px; height: 100%;}
 /* closebtn */
@@ -200,7 +202,12 @@ textarea.invalid,
 .bookshelf .book .bookmark::after{content: '북마크 하기';  position: absolute; left:50%; transform: translateX(-50%) rotate(0); top:-100%; background-color: #222; color:#fff; font-size: 16px; width: 88px; padding: 7px; border-radius: 5px; opacity: 0; visibility: hidden; transition: all 0.5s; font-weight: normal; font-family: 'Hi Melody', cursive}
 .bookshelf .book .bookmark.bookmarked::after{content: '북마크 해제';}
 .bookshelf .book .bookmark:hover::after{opacity: 1; visibility: visible;}
-/* .bookshelf .book .txt.author{left:0; top:100%; background-image: url(/images/postit.png); transform: rotateZ(4deg); font-size: 14px;} */
+
+/* oher-book */
+.head.other_books{display: flex;}
+.head.other_books h2{margin-right: auto;}
+.head.other_books .search_form{margin: 0; width: 600px;}
+
 /* 프로파일 */
 .profile_content{width: 70%; margin: 0 auto;}
 @media (max-width:1400px) {
@@ -209,13 +216,17 @@ textarea.invalid,
    .inner{width: 100%; padding: 0 10px; box-sizing: border-box;}
     .header .right_menu .m_menu{margin-right: 10px;}
     .action_menu .menu{padding: 10px; box-sizing: border-box;}
-    .header .right_menu .gnb a{font-size: 16px;}
+    .header .right_menu .gnb a{font-size: 14px; padding:0 7px;}
 }
 @media (max-width:990px) {
     .auth_container{width: 80%;}
     .auth_container .imgbx{display: none;}
     .auth_container .user .formbx{width: 100%;}
     .auth_container .formbx{width: 100%; transition: all 0.5s; padding: 10px;}
+    .header .logo{font-size: 26px; line-height: 50px;}
+    .head.other_books{display: block; margin-bottom: 8px;}
+    .head.other_books h2{margin-bottom: 10px;}
+    .head.other_books .search_form{width: 100%;}
     /* 프로파일 */
     .profile_content{width: 100%;}
 }
@@ -229,18 +240,23 @@ textarea.invalid,
     .header{padding: 5px;}
     .header .inner{padding: 0 7px;}
     .header .right_menu .m_menu{margin-left: 0;}
+    .header .right_menu .login_menu .primary-btn{padding: 9px; font-size: 12px;}
     .header .right_menu .gnb{position: fixed; display: block; z-index: 9999; padding: 10px; box-sizing: border-box;  right:-100%; background-color: #fff; top:68px; transition: all 0.5s; box-shadow: 0 0 5px rgba(0, 0, 0, 0.281); border-radius: 15px 0 0 15px;}
     .header .right_menu.active .gnb{right: -11px; text-align: center;}
     .header .right_menu .gnb a{display: block;}
-    .header .logo{font-size: 26px; line-height: 50px;}
     .header .right_menu .m_menu .profile{font-size: 14px;}
     /* mobile gnb */
-    .mobile_gnb{display: block;}  
+    .mobile_gnb{display: block;}
     /* form input*/
     .main_container .form_content textarea, .main_container .form_content input{padding: 10px; font-size: 14px;}
 }
 @media (max-width:360px){
+    .header .inner{padding: 0;}
     .file_container .txt{position: static; transform: none;}
-    .file_container .photos{width: 100%; height: 100px; text-align: center; border: 1px solid royalblue; padding: 5px; border-radius: 20px;}
+    .file_container .photos{width: 100%; height: 100px; text-align: center; border: 1px solid royalblue; padding: 5px; border-radius: 20px; background-color: #fff;}
     .file_container .photos .deletebtn{right: 0;}
+    /* 달력 */
+    .main_container .dropdown-menu{left:17px !important;}
+
+
 }
