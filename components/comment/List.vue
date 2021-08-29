@@ -1,10 +1,10 @@
 <template>
   <li>
-     <!-- 댓글 썸네일 이미지 -->
+    <!-- 댓글 썸네일 이미지 -->
     <div class="c_thumbnail">
-       <!-- 사용자의 프로필(썸네일) 이미지가 있다면 이미지를 보여줍니다.-->
+      <!-- 사용자의 프로필(썸네일) 이미지가 있다면 이미지를 보여줍니다.-->
       <span v-if="comment.User && comment.User.thumbnail"><img :src="comment.User.thumbnail" alt="썸네일"></span>
-       <!-- 사용자의 프로필(썸네일) 이미지가 없다면 사용자의 닉네임 첫글자를 보여줍니다. -->
+      <!-- 사용자의 프로필(썸네일) 이미지가 없다면 사용자의 닉네임 첫글자를 보여줍니다. -->
       <span v-else>{{ String(comment.User.username)[0] }}</span>
       <p>{{ comment.User.username }}</p>
     </div>
@@ -59,7 +59,8 @@ export default {
 <style scoped>
 li{position: relative; border-radius: 20px; background-color: #eee;}
 li .c_thumbnail{display: flex; align-items: center;}
-li .c_thumbnail>span{position: relative; display: inline-block; width: 30px; height: 30px; border-radius: 50%; background-color:#fff; border: 2px solid #17a2b8; padding: 6px; color:#222; font-weight: bold; font-size: 20px; overflow: hidden; text-align: center; line-height: 30px;}
+li .c_thumbnail>span{position: relative; display: flex;
+justify-content: center;align-items: center; width: 30px; height: 30px;  border-radius: 50%; background-color:#fff; border: 2px solid #17a2b8; padding: 6px; color:#222; font-weight: bold; font-size: 20px; overflow: hidden; text-align: center; line-height: 30px;}
 li .c_thumbnail>span img{position: absolute; left:50%; top:50%; transform: translate(-50%,-50%); width: 100%; height: 100%;}
 li .c_thumbnail p{font-weight: bold; font-size: 18px; margin-left: 10px;}
 li{border: 1px solid #ddd; margin: 10px 0; padding: 10px; box-sizing: border-box;}

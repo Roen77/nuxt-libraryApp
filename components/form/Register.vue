@@ -76,7 +76,7 @@ export default {
   computed: {
   //  1. 비밀번호 길이 검사
     isvalidLength () {
-      return validLength(this.password, { len1: 8, len2: 30 })
+      return validLength(this.password, 8, 30)
     },
     // 2. 이메일 유효성 검사
     isvalidEmail () {

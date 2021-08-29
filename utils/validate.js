@@ -6,14 +6,13 @@ const validEmail = (mail) => {
   return (false)
 }
 // 압력값의 길이 범위를 확인하는 감수(몇자 이상 이하 인지 확인)
-const validLength = (value, num) => {
+const validLength = (value, min = 0, max = 500) => {
+  let data = false
   const valueData = value.trim().length
-  if (num.len2 && valueData < num.len2) {
-    if (!num.len1) { return true }
-    if (valueData >= num.len1) {
-      return true
-    } else { return false }
-  } else { return false }
+  if (min <= valueData && valueData <= max) {
+    data = true
+  }
+  return data
 }
 // 입력값 데이터(객체) 전부의 길이를 확인하는 함수
 const inputLen = (value, data, len) => {

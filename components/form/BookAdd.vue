@@ -133,5 +133,7 @@ export default {
 }
 @media (max-width:600px) {
   .form_content.addform{padding: 0;}
+ .main_container .form_content .date_area{display: block;}
+ .main_container .form_content .date_area label{margin: 0 0 5px;}
 }
 </style>

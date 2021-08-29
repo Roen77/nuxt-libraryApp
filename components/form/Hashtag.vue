@@ -79,7 +79,7 @@ export default {
     // 해시태그 글자 길이 확인
     ishashtagLen () {
       if (!this.newtagList) { return }
-      return this.newtagList.every(value => value.length < 10)
+      return this.newtagList.every(value => value.length < 11)
     },
     hashtagErrMsg () {
       if (!this.hashtag) { return }

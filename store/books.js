@@ -186,7 +186,7 @@ export const actions = {
   // 해시태그 추가
   async createHashtag ({ commit }, { bookId, hashtags }) {
     try {
-      const res = await this.$axios.post(`books/${bookId}/addhashtags`, { hashtags })
+      const res = await this.$axios.post(`hashtags/${bookId}`, { hashtags })
       commit('addHashtag', res.data.hashtagList)
     } catch (error) {
       console.error(error)
@@ -195,7 +195,7 @@ export const actions = {
   // 해시태그 삭제
   async deleteHashtag ({ commit }, { bookId, hashtagId }) {
     try {
-      await this.$axios.delete(`books/${bookId}/removehashtag/${hashtagId}`)
+      await this.$axios.delete(`hashtags/${bookId}/tag/${hashtagId}`)
       commit('removeHashtag', hashtagId)
     } catch (error) {
       console.error(error)
@@ -216,7 +216,8 @@ export const actions = {
         res = await this.$axios.get(`books/others/book?page=${page}&search=${search}&target=${target}`)
         break
       case 'hashtags-page':
-        res = await this.$axios.get(`books/hashtags/${name}/?page=${page}`)
+        console.log('왜호출됨??')
+        res = await this.$axios.get(`hashtags/?page=${page}&name=${name}`)
         break
       default:
         break

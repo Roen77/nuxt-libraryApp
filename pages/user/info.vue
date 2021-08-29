@@ -102,13 +102,13 @@ export default {
       return this.password === this.confirm_password
     },
     isvalidLength () {
-      return validLength(this.password, { len1: 8, len2: 30 })
+      return validLength(this.password, 8, 30)
     },
     isnicknameLength () {
-      return validLength(this.username, { len2: 20 })
+      return validLength(this.username, 20)
     },
     isusernamevalid () {
-      return this.username && !this.isnicknameLength
+      return this.username && this.isnicknameLength
     }
   },
   created () {
