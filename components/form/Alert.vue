@@ -1,7 +1,7 @@
 <template>
   <CommonModal class="alert_main">
     <div slot="header">
-      <b>{{ data }}</b> 을(를) {{ confirm }}하시겠어요??
+      <b>{{ title }}</b> 을(를) {{ confirm }}하시겠어요??
     </div>
     <div slot="body" class="body">
       <button class="primary-btn" @click="$emit('onagree')">
@@ -18,7 +18,7 @@
 <script>
 export default {
   props: {
-    data: {
+    title: {
       type: String,
       required: true
     },

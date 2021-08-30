@@ -25,7 +25,7 @@
     <div ref="trigger" class="trigger">
       <LoadingBar v-if="loading" />
     </div>
-    <FormAlert v-if="alert" data="댓글" confirm="삭제" @onagree=" agree" @ondisagree="disagree" />
+    <FormAlert v-if="alert" title="댓글" confirm="삭제" @onagree=" agree" @ondisagree="disagree" />
   </div>
 </template>
 

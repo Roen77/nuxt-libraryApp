@@ -14,9 +14,6 @@
         <p v-if="hashtagchk" class="err">
           추가할 태그에 #을 붙여주세요.
         </p>
-        <p v-if="msg" class="err">
-          {{ msg }}
-        </p>
       </div>
     </form>
     <ul v-if="!invalidHashtag" class="hashtags">
@@ -38,8 +35,7 @@ export default {
   },
   data () {
     return {
-      hashtag: '',
-      msg: ''
+      hashtag: ''
     }
   },
   computed: {
@@ -72,6 +68,9 @@ export default {
       })
       return newtagnames
     },
+    newtagChk () {
+      return this.newtagList && this.newtagList.length > 0
+    },
     // 기존 해시태그 갯수 확인
     currentHashtagsLen () {
       return this.hashtags.length >= 5 || this.invalidHashtag
@@ -88,27 +87,19 @@ export default {
       return ''
     },
     disabledHashtag () {
-      return this.invalidHashtag || !this.hashtag || this.currentHashtagsLen || !this.ishashtagLen
-    }
-  },
-  watch: {
-    hashtag (newValue) {
-      if (!newValue) { this.msg = '' }
+      return this.invalidHashtag || !this.hashtag || this.currentHashtagsLen || !this.ishashtagLen || !this.newtagChk
     }
   },
   methods: {
     ...mapActions('books', ['createHashtag']),
     onaddHashtag () {
-      if (this.newtagList.length > 0) {
+      if (this.newtagChk) {
         this.createHashtag({ bookId: this.$route.params.id, hashtags: this.newtagList })
         this.resetHashtag()
-      } else {
-        this.msg = '이미 등록된 태그가 포함되어 있습니다.'
       }
     },
     resetHashtag () {
       this.hashtag = ''
-      this.msg = ''
     }
   }
 

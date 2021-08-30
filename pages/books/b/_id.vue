@@ -2,7 +2,8 @@
   <div class="book-details">
     <div>
       <BookCardDetail :book="getBook" />
-      <div class="control_btns"
+      <div
+        class="control_btns"
       >
         <div class="left_btn">
           <!-- 삭제 버튼 -->
@@ -23,7 +24,7 @@
       </div>
       <BookEdit v-if="editState" :mybook="getBook" @editStateChange="editStateChange" />
       <CommentEdit />
-      <FormAlert v-if="alert" :data="getBook && getBook.title" :confirm="`삭제`" @onagree=" agree" @ondisagree="disagree" />
+      <FormAlert v-if="alert" :title="getBook && getBook.title" :confirm="`삭제`" @onagree=" agree" @ondisagree="disagree" />
     </div>
   </div>
 </template>

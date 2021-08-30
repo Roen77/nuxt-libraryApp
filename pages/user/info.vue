@@ -27,8 +27,8 @@
           <!-- 이미지 사진 보여주기 -->
           <div class="photos">
             <div class="images">
-              <img v-if="getImagePath.length === 0 &&getUser.thumbnail" :src="getUser.thumbnail" alt="userprofile">
-              <img v-if="getImagePath.length>0" :src="`${getImagePath}`" alt="">
+              <img v-if="hasThumbnail" :src="getUser.thumbnail" alt="thumbnail">
+              <img v-if="hasImage" :src="`${getImagePath}`" alt="thumbnail">
             </div>
           </div>
         </div>
@@ -105,10 +105,16 @@ export default {
       return validLength(this.password, 8, 30)
     },
     isnicknameLength () {
-      return validLength(this.username, 20)
+      return validLength(this.username, 0, 20)
     },
     isusernamevalid () {
-      return this.username && this.isnicknameLength
+      return this.username && !this.isnicknameLength
+    },
+    hasImage () {
+      return this.getImagePath.length > 0
+    },
+    hasThumbnail () {
+      return !this.hasImage && this.getUser.thumbnail
     }
   },
   created () {
@@ -125,9 +131,9 @@ export default {
     ...mapActions('books', ['uploadImg']),
     // 프로파일 정보 수정(닉네임,프로파일 이미지 수정)
     onChangeProfile () {
-      console.log(this.getImagePath, '확인좀222')
       const userinfo = { username: this.username, thumbnail: this.getImagePath }
       this.updateProfile(userinfo)
+      // 프로파일 정보 수정 후 라우터 이동
       this.$router.push('/user/profile')
     },
     // 이미지 업로드
@@ -136,17 +142,19 @@ export default {
       let selectedFile = e.target.files[0]
       const maxSize = 1024 * 1024
       const imageType = /^image/.test(selectedFile && selectedFile.type)
+      // 이미지 타입인지 확인
       if (!imageType) {
         selectedFile = ''
         this.errmsg = '이미지 타입만 업로드해주세요.'
         return
       }
+      // 이미지 사이즈 확인
       if (selectedFile.size > maxSize) {
         selectedFile = ''
         this.errmsg = '용량을 초과하였습니다. 1mb 이하로 업로드해주세요.'
         return
       }
-      console.log(selectedFile, this.getImagePath)
+      // 이미지 업로드 API 호출
       imageFormData.append('photo', selectedFile)
       this.uploadImg(imageFormData, { user: true })
         // eslint-disable-next-line no-return-assign

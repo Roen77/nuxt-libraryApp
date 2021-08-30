@@ -74,7 +74,7 @@ export default {
     }
   },
   computed: {
-  //  1. 비밀번호 길이 검사
+    //  1. 비밀번호 길이 검사
     isvalidLength () {
       return validLength(this.password, 8, 30)
     },
@@ -89,7 +89,7 @@ export default {
     // 4. 이메일과 닉네임의 길이 검사
     isuserInfoLength () {
       return Object.keys(this.user).every((key) => {
-        return validLength(this.user[key], { len2: 20 })
+        return validLength(this.user[key], 0, 20)
       })
     },
     // 입력데이터에 따른 에러 메세지

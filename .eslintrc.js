@@ -3,8 +3,7 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    'cypress/globals': true,
-    sourceType: 'module'
+    'cypress/globals': true
   },
   parserOptions: {
     parser: 'babel-eslint',

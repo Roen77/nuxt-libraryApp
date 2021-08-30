@@ -151,17 +151,21 @@ export const actions = {
   // 이미지 업로드
   async uploadImg ({ commit }, payload) {
     try {
+      // 로딩 시작
       commit('changeLoading', true, { root: true })
       let res
       if (payload && payload.user) {
+        // 사용자 썸네일 이미지 업로드 API
         res = await this.$axios.post('user/thumbnail', payload)
       } else {
+        // 책 썸네일 이미지 업로드 API
         res = await this.$axios.post('books/thumbnail', payload)
       }
       commit('setThumbnail', res.data)
     } catch (error) {
       console.error(error)
     } finally {
+      // 로딩 시작
       commit('changeLoading', false, { root: true })
     }
   },
@@ -216,7 +220,6 @@ export const actions = {
         res = await this.$axios.get(`books/others/book?page=${page}&search=${search}&target=${target}`)
         break
       case 'hashtags-page':
-        console.log('왜호출됨??')
         res = await this.$axios.get(`hashtags/?page=${page}&name=${name}`)
         break
       default:
