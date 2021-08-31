@@ -89,7 +89,7 @@ export default {
           { hid: 'og:site_name', property: 'og:site_name', content: 'Nuxt Movie App' },
           { hid: 'og:description', property: 'og:description', content:this.getBook.content },
           { hid: 'og:image', property: 'og:image', content:`${this.getBook.thumbnail}.jpg` },
-          { hid: 'og:url', property: 'og:url', content:`https://vue.roen.pe.kr${this.$route.fullPath}` },
+          { hid: 'og:url', property: 'og:url', content:`https://vue.roen.pe.kr/books/b/${this.getBook.id}` },
       ]
     }
   }
