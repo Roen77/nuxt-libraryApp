@@ -18,7 +18,8 @@ export default function ({ $axios, error, redirect }) {
         redirect('auth/login')
       } else if (err.response.data.authed) {
         // 인증이 필요한 상태이고,로그인이 이미 되어 있으면 리로드하여 새로고침 실행
-        window.location.reload()
+        redirect('/')
+        // window.location.reload()
       }
       return
     }
