@@ -82,12 +82,13 @@ export default {
   },
     head(){
     return {
+      title: this.getBook.title,
       meta:[
           { hid: 'og:type', property: 'og:type', content: 'website' },
           { hid: 'og:title', property: 'og:title', content:this.getBook.title },
           { hid: 'og:site_name', property: 'og:site_name', content: 'Nuxt Movie App' },
           { hid: 'og:description', property: 'og:description', content:this.getBook.content },
-          { hid: 'og:image', property: 'og:image', content:`${this.getBook.thumbnail}.jpg` },
+          // { hid: 'og:image', property: 'og:image', content:`${this.getBook.thumbnail}.jpg` },
           { hid: 'og:url', property: 'og:url', content:`https://vue.roen.pe.kr${this.$route.fullPath}` },
       ]
     }
