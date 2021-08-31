@@ -49,6 +49,7 @@ export default {
   },
   head () {
     return {
+      title: this.getBook.title,
       meta: [
         { hid: 'og:type', property: 'og:type', content: 'website' },
         { hid: 'og:title', property: 'og:title', content: this.getBook.title },

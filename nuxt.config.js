@@ -6,7 +6,7 @@ module.exports = {
       lang: 'ko'
     },
     meta: [
-      { charset: 'utf-8' },
+      { charset: 'UTF-8' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'library' },
