@@ -4,7 +4,7 @@ module.exports = {
     browser: true,
     node: true,
     'cypress/globals': true,
-    sourceType: 'module'
+    // sourceType: 'module'
   },
   parserOptions: {
     parser: 'babel-eslint',
