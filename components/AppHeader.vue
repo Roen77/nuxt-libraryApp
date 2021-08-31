@@ -190,7 +190,7 @@ export default {
         data: this.search.input
       })
       this.$router.push(
-        `/books/search/1?search=${this.getSearch.selectedOption}&target=${this.search.input}`
+        `/books/search/1?search=${this.getSearch.selectedOption}&target=${encodeURIComponent(this.search.input)}`
       )
     }
   }
@@ -206,6 +206,8 @@ header {
   z-index: 9999;
 }
 header .search_area {
+  box-sizing: border-box;
+  padding: 0 6px;
   background-color: rgba(255, 255, 255, 0.863);
   padding-bottom: 10px;
   margin-top: 5px;
@@ -215,7 +217,7 @@ header .search_area {
   left: 50%;
   top: 70px;
   transform: translateX(-50%);
-  width: 85%;
+  width: 60%;
   z-index: 9999;
 }
 header .search_area .search_btn {
@@ -235,4 +237,9 @@ header .search_area .search_btn {
   margin: 5px;
 }
 .main_nickname{display: inline-block; max-width: 75px;}
+@media (max-width:900px) {
+header .search_area {
+  width: 90%;
+}
+}
 </style>

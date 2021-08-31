@@ -208,6 +208,7 @@ export const actions = {
   // 책 데이터 가져오기
   async fetchBooks ({ commit }, bookData) {
     const { route, page, search, target, name } = bookData
+    console.log(page, target, search, '타켓확인')
     let res
     switch (route) {
       case 'books-page':
@@ -217,6 +218,7 @@ export const actions = {
         res = await this.$axios.get(`books/others/book?page=${page}`)
         break
       case 'books-search-page':
+        console.log('쿼리패치??')
         res = await this.$axios.get(`books/others/book?page=${page}&search=${search}&target=${target}`)
         break
       case 'hashtags-page':

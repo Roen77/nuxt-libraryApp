@@ -53,8 +53,8 @@ export default {
     transition: all .3s ease;
   }
   /* search_form 공통요소 */
-.search_form{position: relative; display: flex; width: 70%; margin: 0 auto; border: 2px solid #677eff;}
-.search_form .main_select{position: absolute; left:0; top:0; height: 45px; line-height: 45px; text-align: center; background-color: #fff; border-right: 1px solid #677eff; width: 100px; cursor: pointer; z-index: 30;}
+.search_form{position: relative; display: flex; width: 100%; margin: 0 auto; border: 2px solid #677eff;}
+.search_form .main_select{position: absolute; left:0; top:0; height: 50px; line-height: 50px; text-align: center; background-color: #fff; border-right: 1px solid #677eff; width: 100px; cursor: pointer; z-index: 30;}
 .search_form .main_select .fas{margin-left: 5px; font-size: 13px; }
 .search_form .custom_select{color:#222;  border: 1px solid #ddd; border-radius: 10px; z-index: 100; background-color: rgb(255, 255, 255);}
 .search_form .custom_select li{line-height: 40px; cursor: pointer; transition: all 0.5s;}
@@ -76,8 +76,8 @@ export default {
 .more-btn{width: 100%;}
 @media (max-width:900px) {
 .search_form{width: 100%;}
-.search_form .main_select{width: 65px; font-size: 14px;}
-.search_form input{padding: 15px 15px 15px 80px;}
+.search_form .main_select{width: 65px; font-size: 14px; height: 42px; line-height: 42px;}
+.search_form input{padding: 11px 11px 11px 80px;}
 .search_form button{width: 60px;}
 }
 </style>

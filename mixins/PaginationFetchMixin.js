@@ -7,6 +7,7 @@ export default {
       const page = params.page
       let data = { page: page - 1, route: route.name }
       if (route.name === 'books-search-page') {
+        console.log('실제데이터 확인', route.query.target)
         data = { ...data, search: encodeURIComponent(route.query.search), target: encodeURIComponent(route.query.target) }
       } else if (route.name === 'hashtags-page') {
         data = { ...data, name: encodeURIComponent(route.query.name) }
@@ -36,7 +37,7 @@ export default {
         case 'books-others-page':
           return this.$router.push(`/books/others/${page}`)
         case 'books-search-page':
-          return this.$router.push(`/books/search/${page}?search=${this.getSearch.selectedOption}&target=${this.getSearch.data}`)
+          return this.$router.push(`/books/search/${page}?search=${this.getSearch.selectedOption}&target=${encodeURIComponent(this.getSearch.data)}`)
         case 'hashtags-page':
           return this.$router.push(`/books/hashtags/${page}?name=${this.$route.query.name}`)
         default:

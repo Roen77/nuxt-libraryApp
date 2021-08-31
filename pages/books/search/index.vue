@@ -124,7 +124,7 @@ export default {
     },
     // 마지막페이지라면 더보기 버튼이 보여지지 않도록 합니다.
     showbutton () {
-      this.isend ? this.showbtn = false : this.showbtn = true
+      this.isend || this.books.length === 0 ? this.showbtn = false : this.showbtn = true
     },
     async onaddBook (book) {
       try {

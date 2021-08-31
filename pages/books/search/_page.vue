@@ -1,7 +1,7 @@
 <template>
   <div class="bookshelf">
     <div class="head search_result other_books">
-      <h2>{{ getSearch.data }} 검색 결과</h2>
+      <h2>{{ decodeURIComponent(getSearch.data) }} 검색 결과</h2>
       <b>{{ dataCount }}</b>
     </div>
     <div v-if="hasBook">
@@ -33,8 +33,9 @@ export default {
   watch: {
     '$route.query': {
       handler (query) {
+        console.log(query.target, encodeURIComponent(query.target), '타겟좀..')
         this.updateSearch({
-          data: query.target,
+          data: encodeURIComponent(query.target),
           selectedOption: query.search
         })
       },

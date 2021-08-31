@@ -5,7 +5,7 @@
 
 /* common */
 .container{width: 100%; max-width: 100%;}
-body{font-family: 'Noto Sans KR', sans-serif; font-size: 16px; line-height: 1.3; font-weight: normal; color:#222; min-width: 260px;}
+body{font-family: 'Noto Sans KR', sans-serif; font-size: 16px; line-height: 1.3; font-weight: normal; color:#222; min-width: 240px;}
 .inner{width: 1320px; margin: 0 auto;}
 a{color:#222;}
 .en{font-family: 'Josefin Sans', sans-serif;}
@@ -13,7 +13,7 @@ a{color:#222;}
 .b{font-weight: bold;}
 .primary{color:#3984F3;}
 .sub_head{font-size: 24px;}
-.main_container h2{font-size: 23px;}
+.main_container h2{font-size: 23px; margin-bottom: 8px;}
 
 
 /* 공통으로 쓸 버튼 */
@@ -180,7 +180,7 @@ a{color:#222;}
 .bookshelf{position: relative; margin-bottom: 100px; }
 .bookshelf .head h2{padding: 10px 0;}
 .bookshelf  .books{width: 100%; display: flex; flex-wrap: wrap; justify-content: center; background-color:rgba(65, 105, 225, 0.151); border-radius: 30px; padding: 20px 0;}
-.bookshelf .book{box-sizing: border-box; width: 200px;  margin: 1% 1% 10% 1%; height:310px; border-top: 1px solid rgba(255,255,255,0.5); border-left: 1px solid rgba(255,255,255,0.5); box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.281); background-color:rgba(255,255,255,0.1); margin-bottom: 110px; background-color: #fff;}
+.bookshelf .book{box-sizing: border-box; width: 200px;  margin: 1% 1% 10% 1%; height:310px; border-top: 1px solid rgba(255,255,255,0.5); border-left: 1px solid rgba(255,255,255,0.5); box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.281); background-color:rgba(255,255,255,0.1); background-color: #fff; margin-bottom: 130px;}
 .bookshelf .book .book_inner{position: relative; width: 100%; height: 100%;}
 .bookshelf .book a{ display: block; width: 100%; height: 100%; }
 .bookshelf .book .marks{position: absolute; left:0; top:0; z-index: 10; }
@@ -188,7 +188,7 @@ a{color:#222;}
 .bookshelf .book .marks .top_bookmark{display: inline-block;  background-color:rgb(12, 103, 156); color:#fff; width: 20px; height: 20px; border-radius: 50%; z-index: 5; text-align: center; line-height: 20px; font-weight: bold; font-size: 14px;}
 .bookshelf .book .marks .c_bookmark{background-color:#D31027 ;}
 .bookshelf .book .photo{position: relative; width: 100%;height: 310px; background-size: 200px 310px; box-sizing: border-box; background-color: rgba(255, 255, 255, 0.404); background-position:center;background-repeat: no-repeat;}
-.bookshelf .book .txt{position: relative;  margin: 5px 0; padding: 7px; box-sizing: border-box;  font-weight: bold;  font-size: 18px; background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(234, 249, 249, 0.952) 0.1%, rgba(239, 249, 251, 0.918) 90.1% ); box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.281); line-height: 1;z-index: 100;}
+.bookshelf .book .txt{position: relative;  margin: 5px 0; padding: 7px; box-sizing: border-box;  font-weight: bold;  font-size: 18px; background-image: radial-gradient( circle farthest-corner at 10% 20%,rgba(234, 249, 249, 0.952) 0.1%, rgba(239, 249, 251, 0.918) 90.1% ); box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.281); line-height: 1;z-index: 100;}
 .bookshelf .book .txt .author{font-size: 15px; margin-top: 10px; font-style: italic;}
 /* overlay */
 .overlay{position: absolute; left:0; top:0; width: 100%; height: 100%; background-color:rgba(0,0,0,0.6);  opacity: 0; visibility: hidden; transition: all 0.3s; box-sizing: border-box;}
@@ -203,7 +203,7 @@ a{color:#222;}
 .bookshelf .book .bookmark.bookmarked::after{content: '북마크 해제';}
 .bookshelf .book .bookmark:hover::after{opacity: 1; visibility: visible;}
 
-/* oher-book */
+/* other-book */
 .head.other_books{display: flex;}
 .head.other_books h2{margin-right: auto;}
 .head.other_books .search_form{margin: 0; width: 600px;}
