@@ -1,7 +1,6 @@
 <template>
   <CommonModal class="book_form">
     <div slot="header">
-      <h1>{{ getImagePath }}</h1>
       <h2 class="sub_head">
         책 정보 수정
       </h2>
@@ -165,7 +164,7 @@ export default {
 .main_container .book_form{background-color:rgba(34, 34, 34, 0.863); width: 100%; display: flex; justify-content: center; align-items: center;}
 .main_container .book_form .modal-wrapper{height: 100%; width: 80%;}
 .book_form .modal-container{position: relative; width: 100%; box-shadow: 20px 20px 50px rgba(0,0,0,0.5); padding:10px 50px; box-sizing: border-box; background-color:#fff; border-top: 1px solid rgba(255,255,255,0.5);border-left: 1px solid rgba(255,255,255,0.5); height:100vh; overflow-y: auto;}
-.editbtn{position: absolute; top:-51px; right: 69px;}
+.editbtn{position: absolute; top:-59px; right: 69px;}
 @media (max-width:1200px) {
     .modal-mask.book_form .modal-container{padding: 10px 20px;}
     .main_container .book_form .modal-wrapper{width: 93%;}

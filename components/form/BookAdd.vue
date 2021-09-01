@@ -1,7 +1,6 @@
 <template>
   <form class="form_content addform" @submit.prevent="onaddBook">
     <div>
-      <h1>{{ getImagePath }}</h1>
       <label for="">책제목</label>
       <p :class="{'invalid':!newBook.title}">
         <input
