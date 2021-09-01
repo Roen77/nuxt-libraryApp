@@ -16,7 +16,7 @@ const validLength = (value, min = 0, max = 500) => {
 }
 // 입력값 데이터(객체) 전부의 길이를 확인
 const inputLen = (value, data, len) => {
-  return data.every(key => value[key].length < len)
+  return data.every(key => value[key].length <= len)
 }
 
 export { validLength, validEmail, inputLen }

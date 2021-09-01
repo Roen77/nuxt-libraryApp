@@ -95,7 +95,7 @@
         <button type="submit" class="round-btn red editbtn" :disabled="disabledBtn || errmsg.length !== 0">
           수정하기
         </button>
-        <CommonAlertMsg :alert-state="!InputLenValid" data="50자 이내로 작성해주세요" />
+        <CommonAlertMsg :alert-state="!InputLenValid" data="100자 이내로 작성해주세요" />
       </form>
     </div>
   </CommonModal>

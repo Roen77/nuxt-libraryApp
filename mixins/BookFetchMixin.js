@@ -19,7 +19,7 @@ export default {
     // 유효성 검사
     InputLenValid () {
       const data = ['title', 'isbn', 'authors', 'publisher']
-      return inputLen(this.newBook, data, 50)
+      return inputLen(this.newBook, data, 100)
     },
     disabledBtn () {
       return !this.newBook.title || !this.newBook.authors || !this.newBook.contents || !this.InputLenValid
@@ -35,7 +35,7 @@ export default {
     async fetchData () {
       try {
         const data = new FormData()
-        const imageFile = this.mybook && this.mybook.thumbnail ? this.mybook.thumbnail : this.selectedFile
+        const imageFile = this.mybook && this.mybook.thumbnail && !this.selectedFile ? this.mybook.thumbnail : this.selectedFile
         console.log(imageFile, this.selectedFile, '이밎지짖지')
         const date = this.newBook && this.newBook.datetime ? new Date(this.newBook.datetime) : new Date()
         data.append('title', this.newBook.title)

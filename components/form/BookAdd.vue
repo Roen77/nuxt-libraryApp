@@ -83,7 +83,7 @@
     <button type="submit" class="round-btn red addbtn" :disabled="disabledBtn || errmsg.length !== 0">
       추가하기
     </button>
-    <CommonAlertMsg :alert-state="!InputLenValid" data="50자 이내로 작성해주세요" />
+    <CommonAlertMsg :alert-state="!InputLenValid" data="100자 이내로 작성해주세요" />
   </form>
 </template>
 
