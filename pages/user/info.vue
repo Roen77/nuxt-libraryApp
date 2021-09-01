@@ -1,6 +1,7 @@
 <template>
   <div class="profile_content">
     <div class="profile_box">
+      <h1>{{ getImagePath }}</h1>
       <h2>프로필 정보 수정</h2>
       <form class="form_content" @submit.prevent="onChangeProfile">
         <!-- 이메일 -->
@@ -18,6 +19,7 @@
         </div>
         <!-- 포르필 이미지 수정 -->
         <div class="file_container add">
+          <!-- 로딩 스피너 -->
           <LoadingBar v-if="$store.state.initLoading" position />
           <div class="txt">
             <label for="fileinput"><span class="round-btn yellow"><i class="far fa-file-image"></i>프로필 이미지
@@ -26,7 +28,7 @@
           </div>
           <!-- 이미지 사진 보여주기 -->
           <div class="photos">
-            <div class="images">
+            <div class="images" :class="{'imgErr':hasErr}">
               <img v-if="hasThumbnail" :src="getUser.thumbnail" alt="thumbnail">
               <img v-if="hasImage" :src="`${getImagePath}`" alt="thumbnail">
             </div>
@@ -35,7 +37,7 @@
         <div class="err">
           {{ errmsg }}
         </div>
-        <button class="round-btn" type="submit" :disabled="errmsg.length !== 0 || isusernamevalid">
+        <button class="round-btn" type="submit" :disabled="hasErr || isusernamevalid">
           프로필 정보 수정
         </button>
       </form>
@@ -85,7 +87,6 @@ import { validLength } from '../../utils/validate'
 export default {
   data () {
     return {
-      email: '',
       username: '',
       isChangePassword: false,
       password: '',
@@ -115,6 +116,9 @@ export default {
     },
     hasThumbnail () {
       return !this.hasImage && this.getUser.thumbnail
+    },
+    hasErr () {
+      return this.errmsg.length > 0
     }
   },
   created () {
@@ -122,6 +126,7 @@ export default {
     this.username = this.getUser.username
     //  이미지 데이터 초기화
     if (this.getImagePath.length !== 0) {
+      console.log('이미지 초기화')
       return this.resetImgagePath()
     }
   },
@@ -174,7 +179,6 @@ export default {
 .profile_content .profile_box{margin-bottom: 40px; border: 1px solid #ddd; box-sizing: border-box; padding: 20px; border-radius: 20px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);background-color: #fff;}
 .profile_content .profile_box.password_box{margin-bottom: 200px;}
 .profile_content .profile_box .password_form>div{margin: 18px 0;}
-.profile_content .file_container .photos{margin: 30px 0;}
 .profile_content .change-btn{margin: 20px 0;}
 @media (max-width:360px){
   .profile_content .file_container .photos{margin: 0;}

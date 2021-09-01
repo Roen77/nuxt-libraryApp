@@ -1,6 +1,7 @@
 <template>
   <form class="form_content addform" @submit.prevent="onaddBook">
     <div>
+      <h1>{{ getImagePath }}</h1>
       <label for="">책제목</label>
       <p :class="{'invalid':!newBook.title}">
         <input
@@ -66,8 +67,8 @@
         <label for="fileinput"><span class="round-btn yellow"><i class="far fa-file-image"></i>책 이미지 추가</span></label>
         <input id="fileinput" style="display:none" type="file" @change="onChangeImage">
       </div>
-      <div v-if="getImagePath.length" class="photos">
-        <div class="images">
+      <div v-if="hasImage" class="photos">
+        <div class="images" :class="{'imgErr':hasErr}">
           <img :src="getImagePath" alt="썸네일 이미지">
         </div>
         <div>
@@ -88,7 +89,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import BookFetchMixin from '~/mixins/BookFetchMixin'
 export default {
   mixins: [BookFetchMixin],
@@ -111,7 +112,7 @@ export default {
   },
   methods: {
     ...mapActions('books', ['createBook', 'uploadImg']),
-    ...mapMutations('books', ['removeThumbnail', 'alertEditComplete']),
+    ...mapMutations('books', ['removeThumbnail']),
     onaddBook () {
       this.fetchData()
     },

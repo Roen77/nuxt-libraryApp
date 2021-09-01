@@ -23,6 +23,12 @@ export default {
     },
     disabledBtn () {
       return !this.newBook.title || !this.newBook.authors || !this.newBook.contents || !this.InputLenValid
+    },
+    hasErr () {
+      return this.errmsg.length > 0
+    },
+    hasImage () {
+      return this.getImagePath.length
     }
   },
   methods: {

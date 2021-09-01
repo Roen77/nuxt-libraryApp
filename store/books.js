@@ -63,7 +63,7 @@ export const mutations = {
     state.imagePath = image
   },
   removeThumbnail (state) {
-    state.imagePath = []
+    state.imagePath = ''
   },
   // 북마크
   addBookmark (state, bookId) {
@@ -93,7 +93,7 @@ export const mutations = {
     state.books[index].Likers = state.books[index].Likers.filter(like => like.id !== userId)
   },
   resetImgagePath (state) {
-    state.imagePath = []
+    state.imagePath = ''
   },
   updateSearch (state, payload) {
     // eslint-disable-next-line
@@ -208,7 +208,6 @@ export const actions = {
   // 책 데이터 가져오기
   async fetchBooks ({ commit }, bookData) {
     const { route, page, search, target, name } = bookData
-    console.log(page, target, search, '타켓확인')
     let res
     switch (route) {
       case 'books-page':

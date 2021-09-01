@@ -1,6 +1,7 @@
 <template>
   <CommonModal class="book_form">
     <div slot="header">
+      <h1>{{ getImagePath }}</h1>
       <h2 class="sub_head">
         책 정보 수정
       </h2>
@@ -77,16 +78,16 @@
           <LoadingBar v-if="initLoading" position />
           <div class="txt">
             <label for="fileinput"><span class="round-btn yellow"><i class="far fa-file-image"></i>책 이미지 수정</span></label>
-            <input id="fileinput" ref="file" style="display:none" type="file" @change="ChangeImage">
+            <input id="fileinput" ref="file" style="display:none" type="file" @change="onChangeImage">
           </div>
+          확인:{{ hasThunbnail }}
           <div class="photos">
-            <div v-show="!resetImage" class="images">
-              <img v-if="showimage && getImagePath.length !== 0" class="image" :src="getImagePath" alt="">
-              <img v-if="mybook.thumbnail && !showimage" class="image" :src="mybook.thumbnail" alt="">
+            <div v-if="hasThunbnail" class="images" :class="{'imgErr':hasErr}">
+              <img :src="mybook.thumbnail" alt="썸네일 이미지">
             </div>
-            <button v-if="showingImage" class="deletebtn" type="button" @click="onremoveImage">
-              <i class="fas fa-plus-circle"></i>
-            </button>
+            <div v-else class="images" :class="{'imgErr':hasErr}">
+              <img :src="hasImagePath" alt="썸네일 이미지">
+            </div>
           </div>
         </div>
         <div class="err">
@@ -130,11 +131,18 @@ export default {
   },
   computed: {
     ...mapState(['initLoading']),
-    isThunbnail () {
-      return this.showimage && !this.mybook.thumbnail && !this.errmsg
+    hasThunbnail () {
+      return this.mybook.thumbnail && !this.hasImage
     },
-    showingImage () {
-      return this.isThunbnail || this.getImagePath.length !== 0
+    hasImagePath () {
+      return this.hasImage ? this.getImagePath : '/images/sample_book.jpg'
+    }
+  },
+  created () {
+    //  이미지 데이터 초기화
+    if (this.getImagePath.length !== 0) {
+      console.log('이미지 초기화')
+      return this.removeThumbnail()
     }
   },
   methods: {
@@ -143,22 +151,8 @@ export default {
     onEditBook () {
       this.fetchData()
     },
-    ChangeImage (e) {
-      this.resetImages()
-      this.onChangeImage(e)
-    },
-    onremoveImage () {
-      this.resetImage = true
-      this.showimage = false
-      this.selectedFile = null
-      this.removeThumbnail()
-    },
     oneditStateChange () {
       this.$emit('editStateChange')
-    },
-    resetImages () {
-      this.resetImage = false
-      this.showimage = true
     }
   }
 

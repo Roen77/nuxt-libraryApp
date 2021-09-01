@@ -163,12 +163,13 @@ a{color:#222;}
 .main_container .form_content textarea:focus,
 .main_container .form_content input:focus{border: 1px solid #677eff; }
 /* input file */
-.file_container{ position: relative;}
+.file_container{display: flex; position: relative;}
 .file_container.add{height: 140px;}
 .file_container .txt{position: absolute; left:0; top:50%; transform: translateY(-50%); z-index: 10;}
-.file_container .photos{ position: relative; text-align: right; height: 140px;}
+.file_container .photos{ margin-left: auto; height: 140px;}
 .file_container .photos .images{width: 100%; height: 100%;}
-.file_container .photos img{width: 120px; height: 100%;}
+.file_container .photos img{width: 120px; height: 100%; text-align: center;}
+.file_container .images.imgErr::after{content: ''; position: absolute; left:0; top:0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.733);}
 /* closebtn */
 .closebtn{position: absolute; top:20px; right: 20px; }
 .file_container .photos .deletebtn{position: absolute; right: 125px; top:0; color:#222; font-size: 23px; background-color:transparent;}
@@ -249,12 +250,14 @@ a{color:#222;}
     .mobile_gnb{display: block;}
     /* form input*/
     .main_container .form_content textarea, .main_container .form_content input{padding: 10px; font-size: 14px;}
-}
-@media (max-width:360px){
-    .header .inner{padding: 0;}
+    /* file */
+    .file_container{display: block;}
     .file_container .txt{position: static; transform: none;}
     .file_container .photos{width: 100%; height: 100px; text-align: center; border: 1px solid royalblue; padding: 5px; border-radius: 20px; background-color: #fff;}
     .file_container .photos .deletebtn{right: 0;}
+}
+@media (max-width:360px){
+    .header .inner{padding: 0;}
     /* 달력 */
     .main_container .dropdown-menu{left:17px !important;}
 

@@ -126,6 +126,7 @@ export default {
         this.inputfocus()
       }
     },
+    // 입력값 초기화
     resetInput () {
       Object.keys(this.user).forEach((key) => { this.user[key] = '' })
       this.password = ''
