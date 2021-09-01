@@ -55,11 +55,11 @@ export default {
         { hid: 'og:type', property: 'og:type', content: 'website' },
         { hid: 'og:title', property: 'og:title', content: 'bbbbb' },
         { hid: 'og:description', property: 'og:description', content: '내용내용내용내용' },
-        { hid: 'og:image', property: 'og:image', content: 'https://myimageslist.s3.us-west-1.amazonaws.com/1630409957052.jpg' },
+        { hid: 'og:image', property: 'og:image', content: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fpost.phinf.naver.net%2FMjAyMTAxMjZfMjA4%2FMDAxNjExNjI5Njc4MDk1.1zDL8lyFFZ60hJibYxiKopMIxQDt6zTONTzF6S1BKUUg.dhyEQluwdoQvfrlxEaHPEm6UDHYB7Seirz7z9iC1D6Mg.PNG%2FIGL4fDyBDunTAnY9dyWgLN6avwDQ.jpg&type=sc960_832' },
         { hid: 'twitter:site', name: 'twitter:site', content: 'https://vue.roen.pe.kr/books/b/13' },
         { hid: 'twitter:title', name: 'twitter:title', content: 'bbbbb' },
         { hid: 'twitter:description', name: 'twitter:description', content: '내용내용내용내용' },
-        { hid: 'twitter:image', name: 'twitter:image', content: 'https://myimageslist.s3.us-west-1.amazonaws.com/1630409957052.jpg' }
+        { hid: 'twitter:image', name: 'twitter:image', content: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fpost.phinf.naver.net%2FMjAyMTAxMjZfMjA4%2FMDAxNjExNjI5Njc4MDk1.1zDL8lyFFZ60hJibYxiKopMIxQDt6zTONTzF6S1BKUUg.dhyEQluwdoQvfrlxEaHPEm6UDHYB7Seirz7z9iC1D6Mg.PNG%2FIGL4fDyBDunTAnY9dyWgLN6avwDQ.jpg&type=sc960_832' }
       ]
     }
   },
