@@ -15,7 +15,6 @@ export default {
   },
   head () {
     return {
-      title: this.otherBookList.title,
       meta: [
         { hid: 'og:url', property: 'og:url', content: `https://vue.roen.pe.kr${this.$route.fullPath}` },
         { hid: 'twitter:site', name: 'twitter:site', content: `https://vue.roen.pe.kr${this.$route.fullPath}` }

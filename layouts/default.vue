@@ -17,7 +17,7 @@
 <script>
 import bus from '~/utils/bus'
 export default {
-  middleware: 'authorize',
+  // middleware: 'authorize',
   data () {
     return {
       alertState: false,
