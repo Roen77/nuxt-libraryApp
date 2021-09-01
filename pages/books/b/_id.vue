@@ -55,7 +55,11 @@ export default {
         { hid: 'og:type', property: 'og:type', content: 'website' },
         { hid: 'og:title', property: 'og:title', content: this.getBook.title },
         { hid: 'og:description', property: 'og:description', content: this.getBook.content },
-        { hid: 'og:image', property: 'og:image', content: this.getBook.thumbnail ? `${this.getBook.thumbnail}.jpg` : 'https://vue.roen.pe.kr/images/sample_book.jpg' }
+        { hid: 'og:image', property: 'og:image', content: this.getBook.thumbnail ? `${this.getBook.thumbnail}.jpg` : 'https://vue.roen.pe.kr/images/sample_book.jpg' },
+        { hid: 'twitter:site', property: 'twitter:site', content: `https://vue.roen.pe.kr/books/b/${this.getBook.id}` },
+        { hid: 'twitter:title', property: 'twitter:title', content: this.getBook.title },
+        { hid: 'twitter:description', property: 'twitter:description', content: this.getBook.content },
+        { hid: 'twitter:image', property: 'twitter:image', content: this.getBook.thumbnail ? `${this.getBook.thumbnail}.jpg` : 'https://vue.roen.pe.kr/images/sample_book.jpg' }
       ]
     }
   },
