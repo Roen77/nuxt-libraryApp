@@ -9,17 +9,17 @@ module.exports = {
       { charset: 'utf-8' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'library App' }
-      // { hid: 'og:type', name: 'og:type', content: 'website' },
-      // { hid: 'og:title', name: 'og:title', content: 'library App' },
-      // { hid: 'og:site_name', name: 'og:site_name', content: 'library App' },
-      // { hid: 'og:description', name: 'og:description', content: '나만의 책을 정리하고 기록할 수 있는 라이브러리 사이트입니다.' },
-      // { hid: 'og:url', name: 'og:url', content: 'https://vue.roen.pe.kr/' },
-      // { hid: 'og:image', name: 'og:image', content: 'https://vue.roen.pe.kr/images/sample_book.jpg' },
-      // { hid: 'twitter:site', name: 'twitter:site', content: 'library App' },
-      // { hid: 'twitter:title', name: 'twitter:title', content: 'https://vue.roen.pe.kr' },
-      // { hid: 'twitter:description', name: 'twitter:description', content: '나만의 책을 정리하고 기록할 수 있는 라이브러리 사이트입니다.' },
-      // { hid: 'twitter:image', name: 'twitter:image', content: 'https://vue.roen.pe.kr/images/sample_book.jpg' }
+      { hid: 'description', name: 'description', content: 'library App' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:title', property: 'og:title', content: 'library App' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'library App' },
+      { hid: 'og:description', property: 'og:description', content: '나만의 책을 정리하고 기록할 수 있는 라이브러리 사이트입니다.' },
+      { hid: 'og:url', property: 'og:url', content: 'https://vue.roen.pe.kr/' },
+      { hid: 'og:image', property: 'og:image', content: 'https://vue.roen.pe.kr/images/sample_book.jpg' },
+      { hid: 'twitter:site', name: 'twitter:site', content: 'library App' },
+      { hid: 'twitter:title', name: 'twitter:title', content: 'https://vue.roen.pe.kr' },
+      { hid: 'twitter:description', name: 'twitter:description', content: '나만의 책을 정리하고 기록할 수 있는 라이브러리 사이트입니다.' },
+      { hid: 'twitter:image', name: 'twitter:image', content: 'https://vue.roen.pe.kr/images/sample_book.jpg' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
