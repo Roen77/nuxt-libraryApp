@@ -14,7 +14,7 @@ module.exports = {
       { hid: 'og:title', property: 'og:title', content: 'library App' },
       { hid: 'og:site_name', property: 'og:site_name', content: 'library App' },
       { hid: 'og:description', property: 'og:description', content: '나만의 책을 정리하고 기록할 수 있는 라이브러리 사이트입니다.' },
-      { hid: 'og:url', property: 'og:url', content: 'https://vue.roen.pe.kr' },
+      { hid: 'og:url', property: 'og:url', content: 'https://vue.roen.pe.kr/' },
       { hid: 'og:image', property: 'og:image', content: 'https://vue.roen.pe.kr/images/sample_book.jpg' },
       { hid: 'twitter:site', property: 'twitter:site', content: 'library App' },
       { hid: 'twitter:title', property: 'twitter:title', content: 'https://vue.roen.pe.kr' },
