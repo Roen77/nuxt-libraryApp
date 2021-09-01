@@ -30,10 +30,10 @@ export default {
         { hid: 'og:title', property: 'og:title', content: this.otherBookList.title },
         { hid: 'og:description', property: 'og:description', content: this.otherBookList.contents },
         { hid: 'og:image', property: 'og:image', content: this.otherBookList.thumbnail ? `${this.otherBookList.thumbnail}.jpg` : 'https://vue.roen.pe.kr/images/sample_book.jpg' },
-        { hid: 'twitter:site', property: 'twitter:site', content: `https://vue.roen.pe.kr/books/b/${this.otherBookList.id}` },
-        { hid: 'twitter:title', property: 'twitter:title', content: this.otherBookList.title },
-        { hid: 'twitter:description', property: 'twitter:description', content: this.otherBookList.contents },
-        { hid: 'twitter:image', property: 'twitter:image', content: this.otherBookList.thumbnail ? `${this.otherBookList.thumbnail}.jpg` : 'https://vue.roen.pe.kr/images/sample_book.jpg' }
+        { hid: 'twitter:site', name: 'twitter:site', content: `https://vue.roen.pe.kr/books/b/${this.otherBookList.id}` },
+        { hid: 'twitter:title', name: 'twitter:title', content: this.otherBookList.title },
+        { hid: 'twitter:description', name: 'twitter:description', content: this.otherBookList.contents },
+        { hid: 'twitter:image', name: 'twitter:image', content: this.otherBookList.thumbnail ? `${this.otherBookList.thumbnail}.jpg` : 'https://vue.roen.pe.kr/images/sample_book.jpg' }
       ]
     }
   }
