@@ -32,7 +32,7 @@
         {{ onLimitLen(book.title, 10) }}
       </p>
       <p v-if="book && book.authors" class="author book_font">
-        {{ book.authors }} 지음
+        {{ onLimitLen(book.authors, 10) }} 지음
       </p>
       <!-- 해시태그 리스트 -->
       <HashtagList :hashtags="book.Hashtags" />

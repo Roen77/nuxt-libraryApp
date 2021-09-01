@@ -35,7 +35,8 @@ export default {
     async fetchData () {
       try {
         const data = new FormData()
-        const imageFile = this.mybook && !this.selectedFile ? this.mybook.thumbnail : this.selectedFile
+        const imageFile = this.mybook && this.mybook.thumbnail ? this.mybook.thumbnail : this.selectedFile
+        console.log(imageFile, this.selectedFile, '이밎지짖지')
         const date = this.newBook && this.newBook.datetime ? new Date(this.newBook.datetime) : new Date()
         data.append('title', this.newBook.title)
         data.append('contents', this.newBook.contents)
