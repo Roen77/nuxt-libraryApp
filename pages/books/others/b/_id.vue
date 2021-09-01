@@ -23,36 +23,20 @@ export default {
   },
   head () {
     return {
-      title: 'aaaa',
+      title: this.otherBookList.title,
       meta: [
-        { hid: 'og:url', property: 'og:url', content: 'https://vue.roen.pe.kr/books/others/b/13' },
+        { hid: 'og:url', property: 'og:url', content: `https://vue.roen.pe.kr/books/others/b/${this.otherBookList.id}` },
         { hid: 'og:type', property: 'og:type', content: 'website' },
-        { hid: 'og:title', property: 'og:title', content: 'aaaaaa' },
-        { hid: 'og:description', property: 'og:description', content: '내용내용내용내용' },
-        { hid: 'og:image', property: 'og:image', content: 'https://myimageslist.s3.us-west-1.amazonaws.com/1630409957052.jpg' },
-        { hid: 'twitter:site', name: 'twitter:site', content: 'https://vue.roen.pe.kr/books/others/b/13' },
-        { hid: 'twitter:title', name: 'twitter:title', content: 'aaaaaa' },
-        { hid: 'twitter:description', name: 'twitter:description', content: '내용내용내용내용' },
-        { hid: 'twitter:image', name: 'twitter:image', content: 'https://myimageslist.s3.us-west-1.amazonaws.com/1630409957052.jpg' }
+        { hid: 'og:title', property: 'og:title', content: this.otherBookList.title },
+        { hid: 'og:description', property: 'og:description', content: this.otherBookList.contents },
+        { hid: 'og:image', property: 'og:image', content: this.otherBookList.thumbnail ? `${this.otherBookList.thumbnail}` : 'https://vue.roen.pe.kr/images/sample_book.jpg' },
+        { hid: 'twitter:site', name: 'twitter:site', content: `https://vue.roen.pe.kr/books/b/${this.otherBookList.id}` },
+        { hid: 'twitter:title', name: 'twitter:title', content: this.otherBookList.title },
+        { hid: 'twitter:description', name: 'twitter:description', content: this.otherBookList.contents },
+        { hid: 'twitter:image', name: 'twitter:image', content: this.otherBookList.thumbnail ? `${this.otherBookList.thumbnail}` : 'https://vue.roen.pe.kr/images/sample_book.jpg' }
       ]
     }
   }
-  // head () {
-  //   return {
-  //     title: this.otherBookList.title,
-  //     meta: [
-  //       { hid: 'og:url', property: 'og:url', content: `https://vue.roen.pe.kr/books/others/b/${this.otherBookList.id}` },
-  //       { hid: 'og:type', property: 'og:type', content: 'website' },
-  //       { hid: 'og:title', property: 'og:title', content: this.otherBookList.title },
-  //       { hid: 'og:description', property: 'og:description', content: this.otherBookList.contents },
-  //       { hid: 'og:image', property: 'og:image', content: this.otherBookList.thumbnail ? `${this.otherBookList.thumbnail}.jpg` : 'https://vue.roen.pe.kr/images/sample_book.jpg' },
-  //       { hid: 'twitter:site', name: 'twitter:site', content: `https://vue.roen.pe.kr/books/b/${this.otherBookList.id}` },
-  //       { hid: 'twitter:title', name: 'twitter:title', content: this.otherBookList.title },
-  //       { hid: 'twitter:description', name: 'twitter:description', content: this.otherBookList.contents },
-  //       { hid: 'twitter:image', name: 'twitter:image', content: this.otherBookList.thumbnail ? `${this.otherBookList.thumbnail}.jpg` : 'https://vue.roen.pe.kr/images/sample_book.jpg' }
-  //     ]
-  //   }
-  // }
   // head () {
   //   return {
   //     meta: [
