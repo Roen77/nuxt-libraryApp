@@ -7,7 +7,7 @@
       <div class="book_detail">
         <div class="book_thumbnail">
           <img v-if="book.thumbnail" :src="onResizeImage" alt="썸네일 이미지">
-          <img v-else src="/images/sample_book.svg" alt="썸네일 이미지">
+          <img v-else src="/images/sample_book.jpg" alt="썸네일 이미지">
         </div>
         <div class="book_content">
           <h2>

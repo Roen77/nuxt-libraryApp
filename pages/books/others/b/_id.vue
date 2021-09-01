@@ -28,7 +28,7 @@ export default {
   //       { hid: 'og:title', property: 'og:title', content: this.otherBookList.title },
   //       { hid: 'og:site_name', property: 'og:site_name', content: 'library App' },
   //       { hid: 'og:description', property: 'og:description', content: this.otherBookList.contents },
-  //       { hid: 'og:image', property: 'og:image', content: this.otherBookList.thumbnail ? this.otherBookList.thumbnail : 'https://vue.roen.pe.kr/images/sample_book.svg' },
+  //       { hid: 'og:image', property: 'og:image', content: this.otherBookList.thumbnail ? this.otherBookList.thumbnail : 'https://vue.roen.pe.kr/images/sample_book.jpg' },
   //       { hid: 'og:url', property: 'og:url', content: `https://vue.roen.pe.kr${this.$route.fullPath}` }
   //     ]
   //   }

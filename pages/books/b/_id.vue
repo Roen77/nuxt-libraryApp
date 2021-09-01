@@ -47,6 +47,18 @@ export default {
       alert: false
     }
   },
+  head () {
+    return {
+      title: this.getBook.title,
+      meta: [
+        { hid: 'og:url', property: 'og:url', content: `https://vue.roen.pe.kr/books/b/${this.getBook.id}` },
+        { hid: 'og:type', property: 'og:type', content: 'website' },
+        { hid: 'og:title', property: 'og:title', content: this.getBook.title },
+        { hid: 'og:description', property: 'og:description', content: this.getBook.content },
+        { hid: 'og:image', property: 'og:image', content: this.getBook.thumbnail ? `${this.getBook.thumbnail}.jpg` : 'https://vue.roen.pe.kr/images/sample_book.jpg' }
+      ]
+    }
+  },
   computed: {
     ...mapGetters('books', ['getBook'])
   },
@@ -79,21 +91,7 @@ export default {
         console.error(error)
       }
     }
-  },
-    head(){
-    return {
-      title: this.getBook.title,
-      meta:[
-          {  property: 'og:url', content:`https://vue.roen.pe.kr/books/b/${this.getBook.id}`},
-          {  property: 'og:type', content: 'website' },
-          {  property: 'og:title', content:this.getBook.title },
-          {  property: 'og:site_name', content: 'Nuxt Movie App' },
-          {  property: 'og:description', content:this.getBook.content },
-          {  property: 'og:image', content:`${this.getBook.thumbnail}.jpg` },
-      ]
-    }
   }
-
 }
 </script>
 

@@ -90,7 +90,7 @@ export default {
     setbackground () {
       return this.book.thumbnail
         ? `url(${resizeImage(this.book.thumbnail)})`
-        : 'url(/images/sample_book.svg)'
+        : 'url(/images/sample_book.jpg)'
     }
   },
   methods: {
