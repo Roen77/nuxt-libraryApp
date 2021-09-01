@@ -1,7 +1,7 @@
 <template>
   <CommonModal class="alert_main">
     <div slot="header">
-      <b>{{ title }}</b> 을(를) {{ confirm }}하시겠어요??
+      <b class="title">{{ title }}</b> 을(를) {{ confirm }}하시겠어요??
     </div>
     <div slot="body" class="body">
       <button class="primary-btn" @click="$emit('onagree')">
@@ -35,7 +35,8 @@ export default {
 .modal-mask.alert_main{
   background-color:rgba(0,0,0,0.6);
 }
-.modal-mask.alert_main .modal-container{width: 700px; height: auto; border-radius: 5px;}
+.modal-mask.alert_main .title{word-break: break-all;}
+.modal-mask.alert_main .modal-container{width: 700px; height: auto; border-radius: 5px; padding: 15px;}
 .modal-mask.alert_main .body{text-align: center;}
 .modal-mask.alert_main .body button{border-radius: 9px;}
 @media (max-width:900px) {
