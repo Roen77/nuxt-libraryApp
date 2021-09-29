@@ -4,13 +4,16 @@
       <div>
         <p>{{ selectedOption }}<i class="fas fa-chevron-down"></i></p>
       </div>
+      <!-- 옵션 리스트 -->
       <ul v-if="selected" class="custom_select">
         <li v-for="(option,index) in options" :key="index" @click="changeSelect(option)">
           {{ option }}
         </li>
       </ul>
     </div>
+    <!-- 입력 -->
     <input ref="searchInput" :value="value" type="text" placeholder="검색" @input="$emit('input',$event.target.value)">
+    <!-- 버튼 -->
     <button type="submit">
       <i class="fas fa-search"></i>
     </button>

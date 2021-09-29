@@ -1,5 +1,6 @@
 <template>
   <form class="comment_form" @submit.prevent="onaddComment">
+    <!-- 댓글 작성란 -->
     <div>
       <p>
         <textarea
@@ -15,7 +16,7 @@
     </div>
     <div>{{ commentLen }}/100</div>
     <div v-if="textLengthChk" class="err">
-      코멘트는 100자 이하여야 합니다.
+      댓글은 100자 이하여야 합니다.
     </div>
     <div class="comment_btn">
       <div class="rating">
@@ -33,7 +34,7 @@
       </div>
       <!-- rating -->
       <button type="submit" class="round-btn fill comment_btn" :disabled="textLengthChk || !textcomments">
-        코멘트 추가
+        댓글 추가
       </button>
     </div>
   </form>
@@ -77,9 +78,7 @@ export default {
     ...mapActions('comments', ['createComment']),
     onaddComment () {
       //  댓글 작성폼에 아무것도 입력되지 않았다면,리턴시켜줍니다.
-      if (this.textcomments.trim().length <= 0) {
-        return
-      }
+      if (!this.textcomments.trim()) { return }
       this.createComment({ bookId: this.$route.params.id, comments: this.textcomments, rating: this.rating })
       this.resetForm()
     },
@@ -87,6 +86,7 @@ export default {
       this.textcomments = ''
       this.rating = 0
     },
+    // 입력값에 따라 높이값을 다시 설정
     resize (e) {
       if (this.textLengthChk) { return }
       e.target.style.height = 'auto'

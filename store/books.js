@@ -1,37 +1,27 @@
-
+import { loadImage } from '~/utils/image'
 export const state = () => ({
   // search meta
   meta: {},
+  // 책 데이터
   books: [],
+  // 책 단일 데이터
   book: {},
+  // 페이지
   currentPage: 0,
+  // 이미지 파일
   imagePath: '',
+  // 이미지 오류
+  imageErr: '',
+  // 편집상태
+  editState: false,
+  // 책 검색
   search: {
     data: '',
     selectedOption: '책제목'
   }
 })
-export const getters = {
-  getmeta (state) {
-    return state.meta
-  },
-  getBook (state) {
-    return state.book
-  },
-  getBooks (state) {
-    return state.books
-  },
-  getCurrentPage (state) {
-    return state.currentPage
-  },
-  getImagePath (state) {
-    return state.imagePath
-  },
-  getSearch (state) {
-    return state.search
-  }
-}
 export const mutations = {
+  // 책 검색 추가
   addBook (state, bookData) {
     const { data, reset } = bookData
     // 초기화
@@ -40,7 +30,7 @@ export const mutations = {
       state.meta = {}
     }
     data.documents.forEach((book) => {
-      state.books.push(book)
+      state.books = [...state.books, book]
     })
     state.meta = data.meta
   },
@@ -48,32 +38,32 @@ export const mutations = {
     state.books = []
     state.meta = {}
   },
-
+  // 책 추가
   createBook (state, bookData) {
-    state.books.unshift(bookData)
+    state.books = [bookData, ...state.books]
   },
   loadBooks (state, { books, page }) {
+    // state의 books 배열에 책 데이터를 저장합니다.
     state.books = [...books]
+    // 현재페이지는 `state`의 currentPage에 저장합니다.
     state.currentPage = page
   },
   loadbook (state, bookData) {
     state.book = bookData
   },
-  setThumbnail (state, image) {
-    state.imagePath = image
-  },
-  removeThumbnail (state) {
-    state.imagePath = ''
-  },
   // 북마크
-  addBookmark (state, bookId) {
+  changeBookmark (state, { bookId, value }) {
     const index = state.books.findIndex(book => book.id === bookId)
-    state.books[index].bookmark = true
+    state.books[index].bookmark = value
   },
-  removeBookmark (state, bookId) {
-    const index = state.books.findIndex(book => book.id === bookId)
-    state.books[index].bookmark = false
-  },
+  // addBookmark (state, bookId) {
+  //   const index = state.books.findIndex(book => book.id === bookId)
+  //   state.books[index].bookmark = true
+  // },
+  // removeBookmark (state, bookId) {
+  //   const index = state.books.findIndex(book => book.id === bookId)
+  //   state.books[index].bookmark = false
+  // },
   // 해시태그
   addHashtag (state, hashtagList) {
     state.book.Hashtags = state.book.Hashtags.concat(hashtagList)
@@ -81,19 +71,24 @@ export const mutations = {
   removeHashtag (state, hashtagId) {
     state.book.Hashtags = state.book.Hashtags.filter(tag => tag.id !== hashtagId)
   },
-  // 좋아요
+  // 좋아요 추가
   addlike (state, likeData) {
     const { bookId, userId } = likeData
     const index = state.books.findIndex(book => book.id === bookId)
     state.books[index].Likers.push({ id: userId })
   },
+  // 좋아요 삭제
   removelike (state, likeData) {
     const { bookId, userId } = likeData
     const index = state.books.findIndex(book => book.id === bookId)
     state.books[index].Likers = state.books[index].Likers.filter(like => like.id !== userId)
   },
-  resetImgagePath (state) {
-    state.imagePath = ''
+  // state 업데이트
+  updateState (state, payload) {
+    Object.keys(payload).forEach((key) => { state[key] = payload[key] })
+  },
+  updateEdit (state, value) {
+    state.editState = value
   },
   updateSearch (state, payload) {
     // eslint-disable-next-line
@@ -153,19 +148,16 @@ export const actions = {
     try {
       // 로딩 시작
       commit('changeLoading', true, { root: true })
-      let res
-      if (payload && payload.user) {
-        // 사용자 썸네일 이미지 업로드 API
-        res = await this.$axios.post('user/thumbnail', payload)
-      } else {
-        // 책 썸네일 이미지 업로드 API
-        res = await this.$axios.post('books/thumbnail', payload)
-      }
-      commit('setThumbnail', res.data)
+      const res = await this.$axios.post('thumbnail', payload)
+      commit('updateState', {
+        imagePath: res.data
+      })
+      // 이미지 로드된 후 이미지 보여주기
+      await loadImage(res.data || '')
     } catch (error) {
       console.error(error)
     } finally {
-      // 로딩 시작
+      // 로딩 종료
       commit('changeLoading', false, { root: true })
     }
   },
@@ -173,7 +165,7 @@ export const actions = {
   async createBookmark ({ commit }, { bookId }) {
     try {
       await this.$axios.patch(`books/${bookId}/addbookmark`)
-      commit('addBookmark', bookId)
+      commit('changeBookmark', { bookId, value: true })
     } catch (error) {
       console.error(error)
     }
@@ -182,7 +174,7 @@ export const actions = {
   async deleteBookmark ({ commit }, { bookId }) {
     try {
       await this.$axios.patch(`books/${bookId}/removebookmark`)
-      commit('removeBookmark', bookId)
+      commit('changeBookmark', { bookId, value: false })
     } catch (error) {
       console.error(error)
     }
@@ -210,23 +202,27 @@ export const actions = {
     const { route, page, search, target, name } = bookData
     let res
     switch (route) {
+      // 나의 책 데이터
       case 'books-page':
-        res = await this.$axios.get(`/books?page=${page}`)
+        res = await this.$axios.get(`books?page=${page}`)
         break
+        // 다른 사용자의 책 데이터
       case 'books-others-page':
         res = await this.$axios.get(`books/others/book?page=${page}`)
         break
+        // 검색한 책 데이터
       case 'books-search-page':
-        console.log('쿼리패치??')
         res = await this.$axios.get(`books/others/book?page=${page}&search=${search}&target=${target}`)
         break
+        // 태그별 겸색한 데이터
       case 'hashtags-page':
-        res = await this.$axios.get(`hashtags/?page=${page}&name=${name}`)
+        console.log('pate:', page, 'name', name)
+        res = await this.$axios.get(`hashtags?page=${page}&name=${name}`)
         break
       default:
         break
     }
-    commit('loadBooks', { books: res.data.books, page })
+    commit('loadBooks', { books: res.data.books || [], page: res.data.page || 0 })
     return res
   },
   // 다른 사용자의 책(단일) 불러오기

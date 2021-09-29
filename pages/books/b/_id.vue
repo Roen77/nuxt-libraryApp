@@ -1,7 +1,7 @@
 <template>
   <div class="book-details">
     <div>
-      <BookCardDetail :book="getBook" />
+      <BookCardDetail :book="book" />
       <div
         class="control_btns"
       >
@@ -19,18 +19,30 @@
           <button class="primary-btn" @click="onEditHashtag">
             <i class="fas fa-pen-square"></i>해시태그
           </button>
-          <FormHashtag v-if="editHashtag" :hashtags="getBook&&getBook.Hashtags" />
+          <FormHashtag v-if="editHashtag" :hashtags="book&&book.Hashtags" />
         </div>
       </div>
-      <BookEdit v-if="editState" :mybook="getBook" @editStateChange="editStateChange" />
       <CommentEdit />
-      <FormAlert v-if="alert" :title="getBook && getBook.title" :confirm="`삭제`" @onagree=" agree" @ondisagree="disagree" />
+      <FormAlert v-if="alert" :title="book && book.title" :confirm="`삭제`" @onagree=" agree" @ondisagree="disagree" />
     </div>
+    <CommonModal v-if="editState" class="book_form edit">
+      <div slot="header">
+        <h2 class="sub_head">
+          책 정보 수정
+        </h2>
+        <button class="closebtn round-btn" @click="closeEdit">
+          닫기
+        </button>
+      </div>
+      <div slot="body">
+        <FormBook />
+      </div>
+    </CommonModal>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 export default {
   async asyncData ({ store, params }) {
     try {
@@ -41,7 +53,6 @@ export default {
   },
   data () {
     return {
-      editState: false,
       editHashtag: false,
       agreeState: false,
       alert: false
@@ -49,36 +60,37 @@ export default {
   },
   head () {
     return {
-      title: this.getBook.title,
+      title: this.book.title,
       meta: [
-        { hid: 'og:url', property: 'og:url', content: `https://vue.roen.pe.kr/books/b/${this.getBook.id}` },
+        { hid: 'og:url', property: 'og:url', content: `https://vue.roen.pe.kr/books/b/${this.book.id}` },
         { hid: 'og:type', property: 'og:type', content: 'website' },
-        { hid: 'og:title', property: 'og:title', content: this.getBook.title },
-        { hid: 'og:description', property: 'og:description', content: this.getBook.contents },
-        { hid: 'og:image', property: 'og:image', content: this.getBook.thumbnail ? `${this.getBook.thumbnail}` : 'https://vue.roen.pe.kr/images/sample_book.jpg' },
-        { hid: 'twitter:site', name: 'twitter:site', content: `https://vue.roen.pe.kr/books/b/${this.getBook.id}` },
-        { hid: 'twitter:title', name: 'twitter:title', content: this.getBook.title },
-        { hid: 'twitter:description', name: 'twitter:description', content: this.getBook.contents },
-        { hid: 'twitter:image', name: 'twitter:image', content: this.getBook.thumbnail ? `${this.getBook.thumbnail}` : 'https://vue.roen.pe.kr/images/sample_book.jpg' }
+        { hid: 'og:title', property: 'og:title', content: this.book.title },
+        { hid: 'og:description', property: 'og:description', content: this.book.contents },
+        { hid: 'og:image', property: 'og:image', content: this.book.thumbnail ? `${this.book.thumbnail}` : 'https://vue.roen.pe.kr/images/sample_book.jpg' },
+        { hid: 'twitter:site', name: 'twitter:site', content: `https://vue.roen.pe.kr/books/b/${this.book.id}` },
+        { hid: 'twitter:title', name: 'twitter:title', content: this.book.title },
+        { hid: 'twitter:description', name: 'twitter:description', content: this.book.contents },
+        { hid: 'twitter:image', name: 'twitter:image', content: this.book.thumbnail ? `${this.book.thumbnail}` : 'https://vue.roen.pe.kr/images/sample_book.jpg' }
       ]
     }
   },
   computed: {
-    ...mapGetters('books', ['getBook'])
+    ...mapState('books', ['editState', 'book'])
   },
   methods: {
     ...mapActions('books', ['deleteBook']),
+    ...mapMutations('books', ['updateEdit']),
     onremoveBook () {
       this.alert = true
     },
     onEditBook () {
-      this.editState = true
+      this.updateEdit(true)
     },
     onEditHashtag () {
       this.editHashtag = !this.editHashtag
     },
-    editStateChange () {
-      this.editState = false
+    closeEdit () {
+      this.updateEdit(false)
     },
     disagree () {
       this.agreeState = false
@@ -105,6 +117,8 @@ export default {
 .control_btns .right_btn{position: relative; margin-left: auto;}
 .control_btns button{border-radius: 10px; letter-spacing: 1px;}
 .control_btns button .fas{margin-right: 4px;}
+.book_form.edit{border: 5px solid red; box-sizing: border-box; display: flex; justify-content: center; align-items: center;}
+.book_form.edit .modal-container{height: 100vh; box-sizing: border-box; overflow-y: auto;}
 @media (max-width:600px) {
 .control_btns{display: block;}
 }

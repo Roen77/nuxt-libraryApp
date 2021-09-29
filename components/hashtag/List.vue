@@ -1,7 +1,7 @@
 <template>
   <ul class="hashtags tagList">
     <li v-for="(tag,index) in hashtags" :key="index" class="tag" @mouseenter="onChangeState(tag,index)" @mouseleave="tagNum=''">
-      <nuxt-link :to="`/hashtags/1/?name=${tag.name}`">
+      <nuxt-link :to="`/hashtags/1?name=${tag.name}`">
         #{{ tag.name }}
       </nuxt-link>
       <span v-if="ismybook && bookId && index === tagNum " @click.prevent="onRemoveHashtag(tag.id)"><i class="fas fa-plus-circle"></i></span>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   props: {
     hashtags: {
@@ -32,9 +32,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['getUser']),
+    ...mapState('user', ['user']),
     ismybook () {
-      return this.getUser.id === this.userId
+      return this.user.id === this.userId
     }
   },
   methods: {

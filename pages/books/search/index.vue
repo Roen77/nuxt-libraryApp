@@ -9,7 +9,9 @@
     <template v-if="!initLoading">
       <div class="search-content">
         <template v-if="books.length">
-          <h2>총 {{ meta.pageable_count }} 검색</h2>
+          <div class="count">
+            {{ meta.pageable_count }}
+          </div>
         </template>
         <template v-else>
           <BookEmpty />
@@ -36,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import bus from '~/utils/bus.js'
 export default {
   data () {
@@ -54,13 +56,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ books: 'books/getBooks', meta: 'books/getmeta' }),
-    ...mapState(['initLoading'])
+    ...mapState(['initLoading']),
+    ...mapState('books', ['books', 'meta'])
   },
+  // 책 데이터 초기화
   created () {
-    if (this.books.length !== 0) {
-      return this.initsearchBook()
-    }
+    if (this.books.length) { return this.initsearchBook() }
   },
   methods: {
     ...mapMutations('books', ['initsearchBook']),
@@ -75,7 +76,7 @@ export default {
     },
     onFetchbook () {
       // 입력폼에 아무것도 작성하지 않고 엔터를 누른다면 사용자에게 에러메세지로 알려주고,return 해줍니다.
-      if (this.search.length <= 0) {
+      if (!this.search.length) {
         this.errmsg = true
         return
       }
@@ -124,7 +125,7 @@ export default {
     },
     // 마지막페이지라면 더보기 버튼이 보여지지 않도록 합니다.
     showbutton () {
-      this.isend || this.books.length === 0 ? this.showbtn = false : this.showbtn = true
+      this.isend || !this.books.length ? this.showbtn = false : this.showbtn = true
     },
     async onaddBook (book) {
       try {
@@ -132,15 +133,14 @@ export default {
         await this.createBook(bookData)
           .then((res) => {
             // 데이터가 성공적으로 호출됐을 때 알림메세지로 알려주도록 구현했습니다.
-            bus.$emit('on:alert', res.data.msg)
+            bus.$emit('on:alert', { data: res.data.msg, bgcolor: '#5C6BC0' })
             setTimeout(() => {
               bus.$emit('off:alert')
             }, 3000)
           })
       } catch (error) {
         console.log(error)
-        // 이미 저장된 데이터를 또 추가하려고 할 때, 알림메세지로 알려주도록 구현했습니다.
-        bus.$emit('on:alert', error.response.data.msg)
+        bus.$emit('on:alert', { data: error.response.data.msg, bgcolor: '#880E4F' })
         setTimeout(() => {
           bus.$emit('off:alert')
         }, 3000)

@@ -1,13 +1,13 @@
 <template>
   <div class="book_inner">
     <nuxt-link :to="changeBook">
-      <!-- 북마크 및 코멘트 유무 마크 -->
+      <!-- 북마크 및 댓글 유무 마크 -->
       <div class="marks">
         <span v-if="ismybook && onBookmarked" class="top_bookmark">
           {{ isbookmark }}
         </span>
         <span
-          v-if="book.Comments && book.Comments.length > 0"
+          v-if="book.Comments && book.Comments.length"
           class="c_bookmark"
         >c</span>
       </div>
@@ -35,22 +35,26 @@
         {{ onLimitLen(book.authors, 10) }} 지음
       </p>
       <!-- 해시태그 리스트 -->
-      <HashtagList :hashtags="book.Hashtags" />
-      <!-- 북마크 // 좋아요 -->
+      <template v-if="book.Hashtags">
+        <HashtagList :hashtags="book.Hashtags || []" />
+      </template>
+      <!-- 북마크 및 좋아요 -->
+      <!-- 내 책이라면 북마크를 보여줍니다. -->
       <span
         v-if="ismybook"
         class="bookmark"
         :class="{ bookmarked: onBookmarked }"
         @click="onClickBookmark(book.id)"
       ><i class="fas fa-bookmark"></i></span>
+      <!-- 내 책이 아니라면 하트를 보여줍니다. -->
       <span v-else class="heart" @click="onClickLike(book.id)"><i :class="isheart"></i></span>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import { resizeImage } from '~/utils/resizeImage'
+import { mapState, mapActions } from 'vuex'
+import { resizeImage } from '~/utils/image'
 export default {
   props: {
     book: {
@@ -59,10 +63,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['getUser']),
+    ...mapState('user', ['user']),
     // 내 책인지  확인
     ismybook () {
-      return this.book.UserId === this.getUser.id
+      return this.book.UserId === this.user.id
     },
     // 다른 사용자의 책인지 확인
     isNotmybook () {
@@ -78,7 +82,7 @@ export default {
     },
     onclickHearted () {
       return !!(this.book.Likers || []).find(
-        liker => this.getUser.id === liker.id
+        liker => this.user.id === liker.id
       )
     },
     isbookmark () {
@@ -102,18 +106,23 @@ export default {
     ]),
     onClickBookmark (id) {
       if (this.onBookmarked) {
+        // 이미 북마크가 되어 있다면 북마크 삭제 API 호출
         this.deleteBookmark({ bookId: id })
       } else {
+        // 북마크가 되어 있지 않다면 북마크 추가 API  호출
         this.createBookmark({ bookId: id })
       }
     },
     onClickLike (id) {
       if (this.onclickHearted) {
+        // 이미 좋아요를 클릭했다면 좋아요 삭제 api 호출
         this.otherremoveLike({ bookId: id })
       } else {
+        // 좋아요가 추가되어 있지 않다면 좋아요 추가 api 호출
         this.otheraddLike({ bookId: id })
       }
     },
+    // 글자 제한
     onLimitLen (value, len) {
       let valueArr
       if (Array.isArray(value)) {

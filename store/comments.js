@@ -1,7 +1,7 @@
 export const state = () => ({
-  // 코멘트
+  // 댓글
   comments: [],
-  // 코멘트 정보
+  // 댓글 정보
   commentPage: {
     commentCount: 0,
     end: false
@@ -28,13 +28,14 @@ export const mutations = {
         state.comments.push(comment)
       })
     }
-    // 코멘트를 10개씩 호출했을 때, 더이상 호출할 코멘트가 남아있지않다면, 호출하지 않기위해 데이터를 저장합니다.
+    // 댓글을 10개씩 호출했을 때, 더이상 호출할 댓글이 남아있지않다면, 호출하지 않기위해 데이터를 저장합니다.
     state.commentPage.end = data.end
-    // 코멘트의 갯수를 보여주기위해 코멘트의 갯수 데이터를 저장합니다.
+    // 댓글의 갯수를 보여주기위해 댓글의 갯수 데이터를 저장합니다.
     state.commentPage.commentCount = data.commentCount
   },
   createComment (state, comment) {
-    state.comments.unshift(comment)
+    state.comments = [comment, ...state.comments]
+    // 댓글 갯수 증가
     state.commentPage.commentCount++
   },
   removeComment (state, id) {
@@ -46,7 +47,7 @@ export const mutations = {
   }
 }
 export const actions = {
-  // 코멘트
+  // 댓글
   async fetchComments ({ commit, state }, comments) {
     try {
       let res
@@ -61,7 +62,6 @@ export const actions = {
         const lastComment = state.comments && state.comments[state.comments.length - 1]
         res = await this.$axios.get(`books/${comments.bookId}/comments?lastId=${lastComment && lastComment.id}&limit=10&page=${comments.page}`)
       }
-
       commit('loadComments', { data: res.data, init: comments.init })
       return res
     } catch (error) {

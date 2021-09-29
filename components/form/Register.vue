@@ -132,6 +132,7 @@ export default {
       this.password = ''
       this.confirm_password = ''
     },
+    // 이메일 입력폼에 포커스
     inputfocus () {
       this.$refs.emailinput.focus()
     }

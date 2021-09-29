@@ -17,8 +17,7 @@ export default function ({ $axios, error, redirect }) {
         // 인증이 필요한 상태이고,로그인이 되어 있지 않을 때 로그인 페이지로 이동
         return redirect('auth/login')
       } else if (err.response.data.authed) {
-        // 인증이 필요한 상태이고,로그인이 이미 되어 있으면 리로드하여 새로고침 실행
-        // redirect('/')
+        // 인증이 필요한 상태이고,로그인이 이미 되어 있으면 메인페이지로 이동
         return redirect('/')
       }
     }

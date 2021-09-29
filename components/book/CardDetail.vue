@@ -16,7 +16,7 @@
           <div v-if="book.contents" class="description">
             <b class="tit">내용</b>
             <p>
-              {{ book.contents }}...
+              {{ book.contents }}
             </p>
           </div>
           <div><b class="tit">작가</b><p>{{ bookauthorsFormat(book.authors) }}</p></div>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { resizeImage } from '~/utils/resizeImage'
+import { resizeImage } from '~/utils/image'
 export default {
   props: {
     book: {

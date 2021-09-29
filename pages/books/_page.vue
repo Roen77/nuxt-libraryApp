@@ -3,6 +3,9 @@
     <div class="head">
       <h2>나만의 책장</h2>
     </div>
+    <div class="count">
+      {{ total }}
+    </div>
     <div class="main_menu" @mouseleave="showMenu=false">
       <ul v-if="showMenu" class="sub_menu">
         <li>
@@ -20,13 +23,13 @@
       </ul>
       <a href="#" class="floating_btn" @mouseenter="showMenu=true"><i class="fas fa-plus"></i></a>
     </div>
+    <!-- books -->
     <div v-if="hasBook">
       <div class="books">
-        <div v-for="book in getBooks" :key="book.id" class="book">
+        <div v-for="book in books" :key="book.id" class="book">
           <BookCard :book="book" />
         </div>
       </div>
-      <!-- books -->
       <BookPagination :total-page="totalPage" @pagination="pagination" />
     </div>
     <div v-else>

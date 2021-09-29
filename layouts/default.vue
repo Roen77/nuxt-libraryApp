@@ -1,5 +1,5 @@
 <template>
-  <div class="container default">
+  <div class="container default" :class="{'edit':editState}">
     <AppHeader />
     <main class="main_container">
       <div class="inner">
@@ -10,11 +10,12 @@
       </div>
     </main>
     <AppFooter />
-    <CommonAlertMsg :alert-state="alertState" :data="data" />
+    <CommonAlertMsg :alert-state="alertState" :data="data" :bgcolor="bgcolor" />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import bus from '~/utils/bus'
 export default {
   middleware: 'authorize',
@@ -22,14 +23,21 @@ export default {
     return {
       alertState: false,
       data: '',
+      bgcolor: '',
       fix: false
     }
   },
+  computed: {
+    ...mapState('books', ['editState'])
+  },
   created () {
-    bus.$on('on:alert', (data) => {
+    // 알림창 보이기
+    bus.$on('on:alert', ({ data, bgcolor }) => {
+      this.bgcolor = bgcolor
       this.data = data
       this.onalert()
     })
+    // 알림창 끄기
     bus.$on('off:alert', this.offalert)
   },
   mounted () {
@@ -64,6 +72,7 @@ export default {
 .default.container{
 background-image: url(/images/main_bg.jpg); background-position: left  bottom 70px; background-size: 450px; background-repeat: no-repeat;
 }
+.default.container.edit{padding: 0; margin: 0; min-height: auto; width: 100%; height: 100vh; overflow: hidden; }
 .topbtn{
   display: none;
   cursor: pointer;

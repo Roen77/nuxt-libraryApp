@@ -14,7 +14,9 @@
           댓글 :{{ getCommentPage.commentCount }}
         </div>
       </div>
+      <!-- 댓글 작성란 -->
       <FormComment />
+      <!-- 댓글 리스트 -->
       <div class="comment_area">
         <div>댓글</div>
         <ul>
@@ -60,6 +62,7 @@ export default {
       this.showComment = !this.showComment
     },
     fetchData () {
+      //  댓글 보기 버튼을 클릭할 때 댓글 조회 API 호출
       if (this.showComment) {
         this.loading = true
         //  처음 데이터를 호출하므로 page는 1로 초기화
@@ -99,8 +102,10 @@ export default {
     },
     agree () {
       try {
+        // 댓글 삭제
         this.deleteComment({ bookId: this.$route.params.id, commentId: this.commendId })
           .then(() => {
+            // 댓글 삭제 후 삭제 알림창 끄기
             this.alert = false
           })
       } catch (error) {

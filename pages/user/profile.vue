@@ -13,12 +13,12 @@
       </div>
       <div class="profile-card">
         <div class="thumbnail">
-          <img v-if="getUser && getUser.thumbnail" :src="getUser.thumbnail" alt="썸네일 이미지">
+          <img v-if="user && user.thumbnail" :src="user.thumbnail" alt="썸네일 이미지">
           <img v-else src="/images/user3.png" alt="썸네일 이미지">
         </div>
         <div class="user_info">
-          <div>이메일 {{ getUser.email }}</div>
-          <div>이름 {{ getUser.username }}</div>
+          <div>이메일 {{ user.email }}</div>
+          <div>이름 {{ user.username }}</div>
         </div>
       </div>
     </div>
@@ -28,14 +28,14 @@
         <ChartBar :datas="formatData('내가 생성한 책의 갯수',books,'#EC407A')" :title-name="`나의 책`" />
         <ChartBar :datas="formatData('내가 북마크한 갯수',bookmarks,'royalblue')" :title-name="`나의 북마크`" />
         <ChartBar :datas="[...formatData('내가 좋아요 한 갯수',likes,'#EF9A9A'),...formatData('좋아요 받은 갯수',likers,'#29B6F6')]" :title-name="`좋아요`" />
-        <ChartBar :datas="formatData('내가 생성한 코멘트 갯수',comments,'#26C6DA')" :title-name="`나의 코멘트`" />
+        <ChartBar :datas="formatData('내가 생성한 댓글 갯수',comments,'#26C6DA')" :title-name="`나의 댓글`" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   async asyncData ({ store }) {
     try {
@@ -58,7 +58,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['getUser'])
+    ...mapState('user', ['user'])
   },
   methods: {
     formatData (label, values, bgColor) {

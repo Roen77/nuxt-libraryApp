@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   props: {
     comment: {
@@ -41,15 +41,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['getUser'])
+    ...mapState('user', ['user'])
   },
   methods: {
-    ...mapActions('comments', ['deleteComment', 'updateComment']),
     onRemoveComment (id) {
       this.$emit('onRemoveComment', id)
     },
-    myComment (user) {
-      return user === this.getUser.username
+    myComment (myname) {
+      return myname === this.user.username
     }
   }
 
@@ -67,7 +66,7 @@ li{border: 1px solid #ddd; margin: 10px 0; padding: 10px; box-sizing: border-box
 li .comment_txt{ margin: 15px 0; white-space: pre-line; word-wrap: break-word; font-family: inherit;}
 li .comment_txt textarea{width: 100%; min-height: 80px;  font-size: 16px;}
 li .remove_btn{position: absolute; right: 10px; bottom:10px;}
-/* 코멘트 rating */
+/* 댓글 rating */
 .comment_star{display: flex; margin-bottom: 5px;}
 .comment_star .fas{color: rgb(245, 209, 9); text-shadow: 0 0 2px yellow;}
 </style>

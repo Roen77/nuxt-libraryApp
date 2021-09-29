@@ -35,7 +35,8 @@ export default {
   },
   data () {
     return {
-      hashtag: ''
+      hashtag: '',
+      limit: 5
     }
   },
   computed: {
@@ -44,11 +45,11 @@ export default {
       return [...tags]
     },
     hashtagchk () {
-      return this.ishashtags && this.ishashtags.length === 0
+      return this.ishashtags && !this.ishashtags.length
     },
     // 해시태그 유효성 검사
     invalidHashtag () {
-      return ((this.hashtags && this.hashtags.length) || 0) + ((this.newtagList && this.newtagList.length) || 0) > 5
+      return ((this.hashtags && this.hashtags.length) || 0) + ((this.newtagList && this.newtagList.length) || 0) > this.limit
     },
     // 추가할 새로운 해시태그 리스트
     newtagList () {
@@ -73,7 +74,7 @@ export default {
     },
     // 기존 해시태그 갯수 확인
     currentHashtagsLen () {
-      return this.hashtags.length >= 5 || this.invalidHashtag
+      return this.hashtags.length >= this.limit || this.invalidHashtag
     },
     // 해시태그 글자 길이 확인
     ishashtagLen () {

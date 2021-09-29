@@ -10,7 +10,7 @@
         class="right_menu"
         :class="{ active: toggleMenu, inactive: invisible }"
       >
-        <nav v-if="getUser">
+        <nav v-if="user">
           <div class="gnb">
             <nuxt-link
               to="/books/1"
@@ -30,22 +30,22 @@
         </nav>
         <!--  메뉴 -->
         <div class="m_menu">
-          <div v-if="getUser" class="action_menu">
+          <div v-if="user" class="action_menu">
             <div class="profile" @click="onactive">
               <img
-                v-if="getUser && getUser.thumbnail"
+                v-if="user && user.thumbnail"
                 class="thumbnail"
-                :src="getUser.thumbnail"
+                :src="user.thumbnail"
                 alt=""
               />
               <img v-else class="thumbnail" src="/images/user3.png" alt="" />
               <span>
-                <b class="cut main_nickname">{{ getUser && getUser.username }} </b>
+                <b class="cut main_nickname">{{ user && user.username }} </b>
               </span>
             </div>
             <div class="menu" :class="{ active: activeMenu }" @click="onactive">
               <h3 class="cut">
-                {{ getUser.username }}
+                {{ user.username }}
               </h3>
               <span class="info">my Profile</span>
               <!-- 모바일 메뉴 -->
@@ -98,13 +98,13 @@
         </div>
       </div>
     </div>
-    <div v-if="getUser && search.showsearchState" class="search_area">
+    <div v-if="user && searchData.showsearchState" class="search_area">
       <div class="search_btn">
-        <a href="#" @click.prevent="search.showsearchState = false">검색창 끄기</a>
+        <a href="#" @click.prevent="searchData.showsearchState = false">검색창 끄기</a>
       </div>
       <FormSearch
-        v-model="search.input"
-        :options="search.options"
+        v-model="searchData.input"
+        :options="searchData.options"
         @searchBook="onsearchBook"
         @selectedOption="onselectedOption"
       />
@@ -113,14 +113,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   data () {
     return {
       activeMenu: false,
       toggleMenu: false,
       invisible: false,
-      search: {
+      searchData: {
         input: '',
         options: ['책제목', '저자'],
         showsearchState: false
@@ -132,8 +132,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['getUser']),
-    ...mapGetters('books', ['getSearch'])
+    ...mapState('user', ['user']),
+    ...mapState('books', ['search'])
   },
   watch: {
     // 라우터에 따른 메뉴 활성화
@@ -168,12 +168,12 @@ export default {
       this.invisible = true
       this.toggleMenu = false
     },
-    // 기존 검색 데이터 초기화
     showSearchForm () {
-      this.search.showsearchState = !this.search.showsearchState
+      this.searchData.showsearchState = !this.searchData.showsearchState
+      // 기존 검색 데이터 초기화
       this.updateSearch({
         data: '',
-        selectedOption: this.search.options[0]
+        selectedOption: this.searchData.options[0]
       })
     },
     onselectedOption (option) {
@@ -183,14 +183,12 @@ export default {
     },
     onsearchBook () {
       // 입력값이 없으면 리턴해준다.
-      if (this.search.input.length === 0) {
-        return
-      }
+      if (!this.searchData.input) { return }
       this.updateSearch({
-        data: this.search.input
+        data: this.searchData.input
       })
       this.$router.push(
-        `/books/search/1?search=${this.getSearch.selectedOption}&target=${encodeURIComponent(this.search.input)}`
+        `/books/search/1?search=${this.search.selectedOption}&target=${encodeURIComponent(this.searchData.input)}`
       )
     }
   }

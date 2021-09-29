@@ -1,12 +1,12 @@
 <template>
   <div class="bookshelf">
     <div class="head search_result other_books">
-      <h2>{{ decodeURIComponent(getSearch.data) }} 검색 결과</h2>
+      <h2>{{ search.data }} 검색 결과</h2>
       <b>{{ dataCount }}</b>
     </div>
     <div v-if="hasBook">
       <div class="books">
-        <div v-for="book in getBooks" :key="book.id" class="book">
+        <div v-for="book in books" :key="book.id" class="book">
           <BookCard :book="book" />
         </div>
       </div>
@@ -20,22 +20,21 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import PaginationFetchMixin from '~/mixins/PaginationFetchMixin'
 export default {
   mixins: [PaginationFetchMixin],
   computed: {
-    ...mapGetters('books', ['getSearch']),
+    ...mapState('books', ['search']),
     dataCount () {
-      return this.getBooks.length ? `${this.total} 검색` : '검색된 책이 없습니다.'
+      return this.books.length ? `${this.total} 검색` : '검색된 책이 없습니다.'
     }
   },
   watch: {
     '$route.query': {
       handler (query) {
-        console.log(query.target, encodeURIComponent(query.target), '타겟좀..')
         this.updateSearch({
-          data: encodeURIComponent(query.target),
+          data: query.target,
           selectedOption: query.search
         })
       },
@@ -46,7 +45,6 @@ export default {
   watchQuery: ['search', 'target'],
   methods: {
     ...mapMutations('books', ['updateSearch'])
-
   }
 }
 </script>

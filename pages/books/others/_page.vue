@@ -3,9 +3,12 @@
     <div class="head other_books">
       <h2>다른사람의 책장</h2>
     </div>
+    <div class="count">
+      {{ total }}
+    </div>
     <div v-if="hasBook">
       <div class="books">
-        <div v-for="book in getBooks" :key="book.id" class="book">
+        <div v-for="book in books" :key="book.id" class="book">
           <BookCard :book="book" />
         </div>
       </div>

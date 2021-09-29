@@ -1,7 +1,7 @@
 <template>
   <div v-if="showPage" class="pagination_inner">
     <BPagination
-      v-model="currentPage"
+      v-model="getCurrentPage"
       :total-rows="rows"
       :per-page="perPage"
       first-number
@@ -12,7 +12,7 @@
 
 <script>
 import { BPagination } from 'bootstrap-vue'
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   components: { BPagination },
   // 전체페이지
@@ -25,14 +25,15 @@ export default {
   data () {
     return {
       perPage: 1,
-      currentPage: 1
+      // 현재 페이지
+      getCurrentPage: 1
     }
   },
   computed: {
-    ...mapGetters('books', ['getBooks', 'getCurrentPage']),
+    ...mapState('books', ['books', 'currentPage']),
     // 전체 페이지의 수가 1페이지면 페이지네이션을 보여주지 않고, 2페이지 이상일 경우에만 페이지네이션을 보여줍니다.
     showPage () {
-      return this.getBooks && this.totalPage > 1
+      return this.books && this.totalPage > 1
     },
     // 전체 페이지
     rows () {
@@ -42,10 +43,11 @@ export default {
   watch: {
     $route: {
       handler (to) {
-        const currentPage = parseInt(to.params.page, 10) - 1
+        const page = parseInt(to.params.page, 10)
         // 현재 페이지 활성화
-        if (this.getCurrentPage === currentPage) {
-          this.currentPage = parseInt(to.params.page, 10)
+        console.log('현재페이지', page, '서버페이지', this.currentPage)
+        if (this.currentPage === page) {
+          this.getCurrentPage = page
         }
       },
       deep: true,
