@@ -36,7 +36,8 @@ export default {
           fontColor: '#6b7280'
         },
         tooltips: {
-          // backgroundColor: '#17BF62'
+          yAlign: 'bottom',
+          position: 'nearest',
           backgroundColor: '#222'
         },
         scales: {
@@ -51,8 +52,8 @@ export default {
             {
               ticks: {
                 beginAtZero: true,
-                stepSize: 1,
-                max: 20
+                stepSize: 10,
+                max: 80
               },
               gridLines: {
                 display: true

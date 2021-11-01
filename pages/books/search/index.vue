@@ -133,7 +133,7 @@ export default {
         await this.createBook(bookData)
           .then((res) => {
             // 데이터가 성공적으로 호출됐을 때 알림메세지로 알려주도록 구현했습니다.
-            bus.$emit('on:alert', { data: res.data.msg, bgcolor: '#5C6BC0' })
+            bus.$emit('on:alert', { data: res.data.msg, bgcolor: '#1A237E' })
             setTimeout(() => {
               bus.$emit('off:alert')
             }, 3000)

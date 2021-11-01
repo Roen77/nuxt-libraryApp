@@ -75,7 +75,12 @@ export default {
     if (this.hasImage) {
       this.updateState({
         imagePath: ''
-      })
+      }) 
+    }
+    if (this.imageErr) {
+      this.updateState({
+        imageErr: ''
+      }) 
     }
   },
   methods: {

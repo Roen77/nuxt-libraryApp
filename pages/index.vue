@@ -1,6 +1,7 @@
 <template>
   <div class="home_inner">
-    <div class="bg"></div>
+    <div class="bg">
+    </div>
   </div>
 </template>
 
@@ -18,11 +19,21 @@ export default {
   height: 100%;
 }
 .bg{
+  margin: 0 auto;
+  border-radius: 30px;
+  width: 1400px;
+  max-width: 100%;
   position: relative;
-  background-image: url(/images/home_bg.jpg);
+  border: 3px solid #ddd;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/images/lib_bg-80.jpg);
   background-position: center;
-  background-size: contain;
-  width: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% top;
+  background-size: cover;
   height: 100%;
 }
 </style>

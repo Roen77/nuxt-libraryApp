@@ -87,7 +87,7 @@ export default {
       return this.newBooks.filter(newBook => newBook.require && newBook[newBook.name]).length >= 3
     },
     disabledBtn () {
-      return !this.inputLenValid || !this.inputReuired
+      return !this.inputLenValid || !this.inputReuired || this.initLoading
     }
   },
   created () {
