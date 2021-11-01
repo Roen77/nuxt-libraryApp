@@ -28,7 +28,7 @@
             별점 주기
           </template>
           <template v-else>
-            <img :src="starChange" alt="">
+            <img :src="starChange" alt="#">
           </template>
         </b>
       </div>

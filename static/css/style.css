@@ -263,6 +263,5 @@ a{color:#222;}
     .header .inner{padding: 0;}
     /* 달력 */
     .main_container .dropdown-menu{left:17px !important;}
-
-
+    .date{font-size: 12px;}
 }

@@ -56,18 +56,11 @@ export const mutations = {
     const index = state.books.findIndex(book => book.id === bookId)
     state.books[index].bookmark = value
   },
-  // addBookmark (state, bookId) {
-  //   const index = state.books.findIndex(book => book.id === bookId)
-  //   state.books[index].bookmark = true
-  // },
-  // removeBookmark (state, bookId) {
-  //   const index = state.books.findIndex(book => book.id === bookId)
-  //   state.books[index].bookmark = false
-  // },
-  // 해시태그
+  // 해시태그 추가
   addHashtag (state, hashtagList) {
     state.book.Hashtags = state.book.Hashtags.concat(hashtagList)
   },
+  // 해시태그 삭제
   removeHashtag (state, hashtagId) {
     state.book.Hashtags = state.book.Hashtags.filter(tag => tag.id !== hashtagId)
   },

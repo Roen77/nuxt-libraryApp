@@ -4,7 +4,7 @@
       <nuxt-link :to="`/hashtags/1?name=${tag.name}`">
         #{{ tag.name }}
       </nuxt-link>
-      <span v-if="ismybook && bookId && index === tagNum " @click.prevent="onRemoveHashtag(tag.id)"><i class="fas fa-plus-circle"></i></span>
+      <span v-if="showCloseBtn(index)" @click.prevent="onRemoveHashtag(tag.id)"><i class="fas fa-plus-circle"></i></span>
     </li>
   </ul>
 </template>
@@ -42,6 +42,9 @@ export default {
     onChangeState (tag) {
       const tagNum = this.hashtags.findIndex(hashtag => hashtag.id === tag.id)
       this.tagNum = tagNum
+    },
+    showCloseBtn (index) {
+      return this.ismybook && this.bookId && index === this.tagNum
     },
     onRemoveHashtag (id) {
       this.deleteHashtag({ bookId: this.bookId, hashtagId: id })
